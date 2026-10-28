@@ -28,6 +28,12 @@ Usa **siempre el mismo navegador**: Google Chrome o Microsoft Edge. Tus datos se
 6. Pulsa **Guardar**. El presupuesto recibe su número, por ejemplo 2026-001.
 7. Pulsa **Descargar PDF** y envíalo a tu cliente con tu correo habitual.
 
+## Copia de seguridad
+
+En «Presupuestos», pulsa **Exportar todo (.zip)**. Se descarga un único archivo con un PDF por cada presupuesto y un archivo de datos (`datos-presupuestospro.json`) con todo lo guardado: perfil, catálogo, clientes y presupuestos. No cambia nada en la aplicación.
+
+Guarda ese .zip **fuera del navegador** (otro disco, un pendrive o una carpeta en la nube), para no perderlo si se borran los datos de navegación.
+
 ## Comprobar que los cálculos están bien
 
 Haz doble clic en `pruebas.html`. Si todo es correcto, verás arriba el mensaje «Todas las pruebas superadas» en verde.

@@ -78,6 +78,9 @@ section[hidden] { display: none; }
 
 .mensaje.exito { background: var(--exito-fondo); color: var(--exito); border-color: var(--exito); }
 .mensaje.error { background: var(--error-fondo); color: var(--error); border-color: var(--error); font-weight: bold; }
+.mensaje.aviso { background: var(--aviso-fondo); color: var(--aviso); border-color: var(--aviso); }
+.exportacion-estado { color: var(--suave); font-size: var(--t-s); margin: 0 0 var(--e-3); }
+.exportacion-estado:empty { display: none; }
 .mensaje ul { margin: var(--e-2) 0 0; padding-left: var(--e-4); }
 
 .vacio { color: var(--suave); padding: var(--e-3) 0; }

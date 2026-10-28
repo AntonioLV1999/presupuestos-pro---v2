@@ -330,6 +330,93 @@
     esIgual(r.vigentes + r.caducados, r.total);
   });
 
+  seccion('Zip');
+
+  function bytesAscii(t) {
+    var b = new Uint8Array(t.length);
+    for (var i = 0; i < t.length; i++) { b[i] = t.charCodeAt(i); }
+    return b;
+  }
+
+  caso('El CRC-32 de «123456789» es 0xCBF43926 y el de vacío es 0', function () {
+    esIgual(Zip.crc32(bytesAscii('123456789')), 0xCBF43926);
+    esIgual(Zip.crc32(new Uint8Array(0)), 0);
+  });
+
+  caso('Zip.crear produce un ZIP legible con nombres UTF-8, CRC y contenido correctos', function () {
+    var nombre = '2026-001 - Estudio García.pdf';
+    var datosA = new Uint8Array([1, 2, 3, 4, 5, 250]);
+    var datosB = bytesAscii('{"a":1}');
+    var zip = Zip.crear([{ nombre: nombre, datos: datosA }, { nombre: 'datos.json', datos: datosB }]);
+    var v = new DataView(zip.buffer);
+    esIgual([zip[0], zip[1], zip[2], zip[3]], [0x50, 0x4B, 0x03, 0x04], 'firma');
+    var fin = zip.length - 22;
+    esIgual(v.getUint32(fin, true), 0x06054b50, 'fin de directorio');
+    esIgual(v.getUint16(fin + 10, true), 2, 'entradas');
+    var p = v.getUint32(fin + 16, true);
+    var esperadas = [{ n: nombre, d: datosA }, { n: 'datos.json', d: datosB }];
+    esperadas.forEach(function (e) {
+      esIgual(v.getUint32(p, true), 0x02014b50, 'directorio central');
+      esIgual((v.getUint16(p + 8, true) >> 11) & 1, 1, 'bit 11');
+      esIgual(v.getUint32(p + 16, true), Zip.crc32(e.d), 'CRC');
+      esIgual(v.getUint32(p + 24, true), e.d.length, 'tamaño');
+      var largo = v.getUint16(p + 28, true);
+      esIgual(new TextDecoder().decode(zip.subarray(p + 46, p + 46 + largo)), e.n, 'nombre');
+      var local = v.getUint32(p + 42, true);
+      var inicio = local + 30 + v.getUint16(local + 26, true) + v.getUint16(local + 28, true);
+      esIgual(Array.prototype.slice.call(zip.subarray(inicio, inicio + e.d.length)), Array.prototype.slice.call(e.d), 'contenido');
+      p += 46 + largo;
+    });
+  });
+
+  seccion('Exportación');
+
+  function pres(numero, cliente) { return { numero: numero, cliente: { nombre: cliente } }; }
+
+  caso('nombreZip lleva la fecha', function () {
+    esIgual(Exportacion.nombreZip('2026-03-15'), 'presupuestospro-copia-2026-03-15.zip');
+  });
+
+  caso('datosCopia envuelve el estado sin transformarlo', function () {
+    var estado = {
+      version: 1,
+      profesional: { nombre: 'Ana', logo: 'data:image/png;base64,AAA' },
+      catalogo: [{ id: 's1' }], clientes: [{ id: 'c1' }], presupuestos: [], contadores: { '2026': 3 }
+    };
+    var copia = JSON.parse(Exportacion.datosCopia(estado, new Date('2026-03-15T10:42:00.000Z')));
+    esIgual(copia.formato, 'presupuestospro-copia');
+    esIgual(copia.version, 1);
+    esIgual(copia.exportadoEn, '2026-03-15T10:42:00.000Z');
+    esIgual(copia.datos, estado);
+  });
+
+  caso('nombresPdf usa «número - cliente» y solo el número sin cliente', function () {
+    esIgual(Exportacion.nombresPdf([pres('2026-001', 'Estudio García')]), ['2026-001 - Estudio García.pdf']);
+    esIgual(Exportacion.nombresPdf([pres('2026-001', '')]), ['2026-001.pdf']);
+  });
+
+  caso('nombreSeguro sustituye caracteres no admitidos y limpia los extremos', function () {
+    esIgual(Exportacion.nombreSeguro('Diseño/Web S.L.'), 'Diseño-Web S.L.');
+    esIgual(Exportacion.nombreSeguro('a\\b/c:d*e?f"g<h>i|j'), 'a-b-c-d-e-f-g-h-i-j');
+    esIgual(Exportacion.nombreSeguro('a   b'), 'a b');
+    esIgual(Exportacion.nombreSeguro(' ..hola.. '), 'hola');
+    esIgual(Exportacion.nombreSeguro('///'), '---');
+    esIgual(Exportacion.nombreSeguro(' . '), '');
+  });
+
+  caso('nombreSeguro acorta a 80 caracteres', function () {
+    esIgual(Exportacion.nombreSeguro(repetir('a', 120)).length, 80);
+  });
+
+  caso('nombresPdf con cliente solo de puntos da «número.pdf»', function () {
+    esIgual(Exportacion.nombresPdf([pres('2026-002', ' . ')]), ['2026-002.pdf']);
+  });
+
+  caso('nombresPdf numera los repetidos sin distinguir mayúsculas', function () {
+    esIgual(Exportacion.nombresPdf([pres('2026-001', 'Ana'), pres('2026-001', 'ANA'), pres('2026-001', 'ana')]),
+      ['2026-001 - Ana.pdf', '2026-001 - ANA (2).pdf', '2026-001 - ana (3).pdf']);
+  });
+
   // --------------------------------------------------------------- Resultado
   function pintar() {
     var contenedor = document.getElementById('resultados');

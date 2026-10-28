@@ -24,11 +24,71 @@
     return App.el('span', { class: 'estado ' + (caducado ? 'caducado' : 'vigente'), text: caducado ? 'Caducado' : 'Vigente' });
   }
 
+  var exportando = false;
+
+  /** Cede el control al navegador para que pinte el progreso (research.md R5). */
+  function respirar() {
+    return new Promise(function (resolver) {
+      requestAnimationFrame(function () { setTimeout(resolver, 0); });
+    });
+  }
+
+  /** Solo lee App.estado: nunca guarda ni cambia datos (FR-005, FR-012). */
+  async function exportarTodo(boton, estadoTexto) {
+    if (exportando) { return; }
+    var presupuestos = App.estado.presupuestos.slice();
+    if (presupuestos.length === 0) {
+      App.mensaje('No hay presupuestos que exportar. Crea alguno y vuelve a intentarlo.', 'aviso');
+      return;
+    }
+    exportando = true;
+    boton.disabled = true;
+    try {
+      var nombres = Exportacion.nombresPdf(presupuestos);
+      var entradas = [];
+      for (var i = 0; i < presupuestos.length; i++) {
+        estadoTexto.textContent = 'Preparando la copia… ' + (i + 1) + ' de ' + presupuestos.length;
+        await respirar();
+        var doc = Pdf.construir(presupuestos[i], App.estado.profesional);
+        entradas.push({ nombre: nombres[i], datos: new Uint8Array(doc.output('arraybuffer')) });
+      }
+      entradas.push({
+        nombre: 'datos-presupuestospro.json',
+        datos: new TextEncoder().encode(Exportacion.datosCopia(App.estado, new Date()))
+      });
+      var zip = Zip.crear(entradas);
+      var nombreZip = Exportacion.nombreZip(Formato.hoy());
+      var url = URL.createObjectURL(new Blob([zip], { type: 'application/zip' }));
+      var enlace = document.createElement('a');
+      enlace.href = url;
+      enlace.download = nombreZip;
+      document.body.appendChild(enlace);
+      enlace.click();
+      document.body.removeChild(enlace);
+      setTimeout(function () { URL.revokeObjectURL(url); }, 10000);
+      var n = presupuestos.length;
+      App.mensaje('Copia lista: ' + n + (n === 1 ? ' presupuesto guardado' : ' presupuestos guardados') + ' en ' + nombreZip + '.', 'exito');
+    } catch (e) {
+      App.mensaje('No se ha podido crear la copia. Tus datos no han cambiado.', 'error');
+    } finally {
+      exportando = false;
+      boton.disabled = false;
+      estadoTexto.textContent = '';
+    }
+  }
+
   function mostrar(seccion) {
     seccion.appendChild(App.el('h2', { text: 'Presupuestos' }));
+    var estadoExportacion = App.el('p', { class: 'exportacion-estado', role: 'status' });
+    var botonExportar = App.el('button', {
+      type: 'button', 'data-guarda': true, text: 'Exportar todo (.zip)',
+      onclick: function () { exportarTodo(botonExportar, estadoExportacion); }
+    });
     seccion.appendChild(App.el('div', { class: 'acciones' }, [
-      App.el('button', { type: 'button', class: 'primario', text: 'Nuevo presupuesto', onclick: function () { App.ir('editor'); } })
+      App.el('button', { type: 'button', class: 'primario', text: 'Nuevo presupuesto', onclick: function () { App.ir('editor'); } }),
+      botonExportar
     ]));
+    seccion.appendChild(estadoExportacion);
 
     var lista = ordenados();
     if (lista.length === 0) {

@@ -10,6 +10,11 @@ App web local para que freelancers hagan presupuestos con IVA (21 %) y retenció
 - Paleta única en `js/tema.js`: la usan el CSS (variables) y el PDF. CSS mobile-first, desde 320 px.
 - Objetivo: Chrome/Edge actuales en Windows.
 
+- [003] Sin librería de ZIP: `js/zip.js` es un escritor propio (método almacenado, nombres UTF-8, CRC-32); no añadir dependencias para empaquetar.
+- [003] Operaciones masivas largas (`async`): ceder el control con `requestAnimationFrame` + `setTimeout` entre pasos para pintar el progreso, y bloquear reentradas con una variable de módulo.
+- [003] Nombres de archivo derivados de datos de la usuaria pasan por `Exportacion.nombreSeguro` (caracteres de Windows → «-») y se hacen únicos sin distinguir mayúsculas.
+- [003] Las exportaciones solo leen `App.estado`; nunca llaman a `App.cambiar` ni `Almacen.guardar`.
+
 ## Arranque y pruebas
 - Arrancar: doble clic en `index.html` (no hay servidor ni instalación).
 - Probar: doble clic en `pruebas.html` (debe decir «Todas las pruebas superadas» en verde; casos en `tests/pruebas.js`).
