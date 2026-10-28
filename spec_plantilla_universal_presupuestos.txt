@@ -1,0 +1,147 @@
+# Especificación: Presupuestos Pro v0
+
+## 1. Objetivo y contexto de negocio
+[¿Qué problema resuelve y por qué importa? ¿Cómo se usa en la vida real?]
+
+El problema que resuelve es el proceso tedioso y lento a la hora de hacer presupuestos, lo que hace que al usuario se le vaya gran parte de su tiempo en esta tarea, cuando en realidad deberia tomarle como mucho un par de minutos. En la vida real lo que se quiere lograr con este desarrollo es agilizar el proceso de elaboración de presupuestos.
+
+## 2. Usuarios
+[¿Quién lo usa? ¿Qué sabe y qué no? ¿Hay alguien que recibe el resultado sin usar la app?]
+
+En este caso en concreto, lo usa una diseñadora freelance que hasta ahora usa un excel anticuado para hacer los presupuestos, no sabe nada de codigo. El resutado final lo reciben los clientes del freelancer que son los que le piden los diseños.
+
+## 3. Escenarios de usuario (historias)
+- HU1 — Como [usuario], quiero [acción], para [beneficio].
+
+- HU1 Como freelancer, quiero configurar mi nombre, NIF, contacto y logo, para que mis presupuestos salgan con mi marca sin tener que ponerla cada vez.
+- HU2 Como freelancer, quiero tener una lista de mis servicios con su precio habitual disponible para hacer los presupuestos.
+- HU3 Como freelancer, quiero calcular la base imponible, el IVA , la retención de IRPF y el total del presupuesto elaborado, para tener todos los calculos del presupuesto automatizados
+- HU4 Como freelancer, quiero imprimir mis presupuestos en PDF, para poder mandarlos personalmente por correo electronico a mis clientes
+
+
+## 4. Requisitos funcionales
+- RF1. El sistema debe [comportamiento observable].   [QUÉ hace, no CÓMO. Sin tecnología.]
+
+- RF1. Cuando el freelancer vuelva a abrir la aplicación, su catálogo y sus presupuestos deben seguir ahí.
+- RF2. Las lineas de los presupuestos deben mostrar el nombre del producto o servicio, su precio y su cantidad
+- RF3. Cuando se calcule el precio, agregar un porcentaje de IVA del 21%
+- RF4. Cuando se calcule el precio, añadir una retención de IRPF del 15 % (o del 7 % para nuevos autónomos) 
+- RF5. La retención del IRPF solo se aplica cuando el cliente es una empresa o un autónomo; a un particular no se le retiene nunca
+- RF6. El total es la base más el IVA menos la retención.
+- RF7. El nombre de los presupuestos generados deben ser numerados automaticamente, empezando de nuevo cada año y indicando una validez de 30 dias (Ejemplo: 2026-001)
+- RF8. El sistema debe comportarse como una aplicación de presupuestos, no de facturación.
+- RF9. El sistema debe ser puramente local, nada de contraseñas ni guardados en la nube.
+- RF10. La moneda que se refleja en los presupuestos es el Euro.
+- RF11. La accion de mandar el email recae en el usuario, el sistema solo se limita a generar el PDF
+- RF12. El contenido del PDF debe mostrar el nombre del freelancer, su NIF, sus datos de contacto y su logo, y una lista de servicios con su precio habitual
+
+## 5. Reglas de negocio (con ejemplos)
+[Las reglas que no se pueden saltar, cada una con un ejemplo concreto que se pueda comprobar.]
+
+Reglas fiscales
+
+- Base imponible = suma de todas las líneas (cantidad × precio unitario).
+- IVA = Base imponible × 21 %.
+- IRPF = Base imponible × 15 % (o 7 % para nuevos autónomos).
+- El IRPF solo se aplica si el cliente es una empresa o un autónomo.
+- A un cliente particular nunca se le aplica IRPF.
+- Total = Base imponible + IVA − IRPF.
+
+5.1 Numeración
+
+Formato automático:
+AAAA-NNN
+
+Ejemplos:
+
+2026-001
+2026-002
+2026-003
+La numeración se reinicia cada año.
+
+5.2 Validez
+
+Todos los presupuestos tendrán una validez de 30 días naturales desde su fecha de emisión.
+
+5.3 Ejemplo completo
+Presupuesto: 2026-001
+
+Concepto	Cantidad	Precio	Importe
+Diseño de identidad visual	1	750,00 €	750,00 €
+Licencias utilizadas para el diseño	2	45,00 €	90,00 €
+Adaptaciones para redes sociales	3	120,00 €	360,00 €
+
+Base imponible = 750,00 + 90,00 + 360,00 = 1.200,00 €
+ 
+IVA (21 %) = 252,00 €
+ 
+IRPF (15 %) = 180,00 €
+ 
+Total = 1.200,00 + 252,00 - 180,00
+= 1.272,00 €
+Resultado (empresa o autónomo con IRPF 15 %):
+
+Base imponible: 1.200,00 €
+IVA: 252,00 €
+IRPF: -180,00 €
+TOTAL: 1.272,00 €
+
+5.3.1 Mismo presupuesto con IRPF 7 %
+IRPF: 84,00 €
+TOTAL: 1.368,00 €
+
+5.3.2 Mismo presupuesto para un particular
+IRPF: 0,00 €
+TOTAL: 1.452,00 €
+
+5.3.4 Caso de comprobación
+Base: 1.000,00 €
+IVA: 210,00 €
+IRPF (15 %): 150,00 €
+ 
+Total = 1.060,00 €
+
+## 6. Criterios de aceptación (verificables sin código)
+- CA1. [Algo que se mira en la app y se sabe si está bien con un sí/no.]
+
+CA1. Al crear el primer presupuesto del año 2026, el identificador mostrado es exactamente 2026-001.
+CA2. Al crear un segundo presupuesto en 2026 después de haber creado el anterior, el identificador mostrado es exactamente 2026-002.
+CA3. Con una única línea de presupuesto de 100,00 € de base imponible y un cliente particular, la aplicación muestra IVA 21,00 €, retención 0,00 € y total 121,00 €.
+CA4. Con una única línea de presupuesto de 100,00 € de base imponible y un cliente marcado como empresa o autónomo con retención del 15 %, la aplicación muestra IVA 21,00 €, retención 15,00 € y total 106,00 €.
+CA5. Con una única línea de presupuesto de 100,00 € de base imponible y un cliente marcado como empresa o autónomo con retención del 7 %, la aplicación muestra IVA 21,00 €, retención 7,00 € y total 114,00 €.
+CA6. Al cambiar el tipo de cliente de empresa/autónomo a particular en un presupuesto con retención aplicada, la retención pasa automáticamente a 0,00 € y deja de descontarse del total.
+CA7. Al añadir dos líneas, una de 2 × 50,00 € y otra de 3 × 20,00 €, la base imponible mostrada es exactamente 160,00 €.
+CA8. Al generar el PDF de un presupuesto, el documento incluye el número de presupuesto, los datos de la profesional, los datos del cliente, la fecha de validez a 30 días y el texto identificándolo como presupuesto, sin mostrar la palabra factura.
+
+## 7. Casos límite
+- CL1. ¿Qué pasa si [situación rara o vacía]?
+
+CL1. ¿Qué pasa si se intenta crear un presupuesto sin ninguna línea de servicio? → La aplicación no permite generar ni descargar el presupuesto y muestra un mensaje indicando que debe añadirse al menos una línea.
+CL2. ¿Qué pasa si se añade un servicio que no existe en el catálogo? → La aplicación permite introducirlo manualmente, indicando descripción, cantidad y precio, y lo incluye en los cálculos igual que cualquier otro servicio del catálogo.
+CL3. ¿Qué pasa si se marca una retención de IRPF para un cliente particular? → La aplicación ignora la retención, la establece en 0 % y recalcula el total sin aplicar ninguna deducción.
+CL4. ¿Qué pasa si una línea tiene cantidad 0? → La aplicación impide guardar el presupuesto o muestra un error indicando que la cantidad debe ser mayor que cero.
+CL5. ¿Qué pasa si una línea tiene un precio negativo? → La aplicación impide guardar el presupuesto y muestra un mensaje indicando que el precio debe ser igual o superior a 0 €.
+CL6. ¿Qué pasa si se genera el primer presupuesto de un nuevo año? → La numeración se reinicia automáticamente y el primer presupuesto recibe el número correspondiente al nuevo año, por ejemplo, 2027-001.
+CL7. ¿Qué pasa si el usuario elimina todas las líneas después de haber creado un presupuesto? → El presupuesto vuelve al estado no válido y no puede descargarse en PDF hasta que se añada al menos una línea de servicio.
+
+
+## 8. Fuera de alcance
+[Lo que esta versión NO hace, dicho explícitamente. La sección que impide que la IA se vaya por las ramas.]
+
+No se incluyen funcionalidades de facturación electrónica ni generación de facturas; la aplicación solo gestiona presupuestos.
+No se incluye el envío de presupuestos por correo electrónico; el usuario descargará el PDF y lo enviará utilizando su propio cliente de email.
+No se incluyen cuentas de usuario, autenticación, contraseñas ni gestión de permisos.
+No se incluye almacenamiento en la nube, sincronización entre dispositivos ni acceso remoto; toda la información reside en el ordenador del usuario.
+No se incluye soporte para monedas distintas del euro.
+No se incluye la gestión de tipos de IVA distintos del 21 % ni de tipos de retención distintos del 15 % y el 7 % definidos en los requisitos.
+No se incluye la presentación de impuestos, generación de modelos fiscales ni integración con la Agencia Tributaria.
+No se incluye la gestión completa de clientes (historial, seguimiento comercial, CRM, etc.); únicamente los datos necesarios para generar presupuestos.
+No se incluye la conversión automática de presupuestos en facturas.
+No se incluye la personalización avanzada de plantillas PDF (editores visuales, múltiples diseños, temas o estilos personalizados).
+No se incluye la importación o exportación masiva de datos desde Excel u otras aplicaciones.
+No se incluye una aplicación móvil ni acceso desde navegador web; la v0 está pensada para ejecutarse localmente en el ordenador del usuario.
+No se incluye la generación de estadísticas, informes de ventas o análisis de negocio. Aunque puede ser una funcionalidad útil en el futuro, queda explícitamente fuera del alcance de la versión inicial para mantener el proyecto centrado en la creación rápida de presupuestos.
+
+## 9. Preguntas abiertas
+- Cuando se menciona nuevos autonomos, existe alguna medida dentro del programa para saber cuando es un nuevo autonomo?
+- Se contempla algun sistema de categorizacion que distinga, por ejemplo, entre particular, autonomo y nuevo autonomo?

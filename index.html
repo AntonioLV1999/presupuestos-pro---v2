@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Presupuestos Pro</title>
+  <script src="js/tema.js"></script>
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+  <header>
+    <h1>Presupuestos Pro</h1>
+    <nav>
+      <button type="button" data-ir="inicio">Inicio</button>
+      <button type="button" data-ir="presupuestos">Presupuestos</button>
+      <button type="button" data-ir="clientes">Clientes</button>
+      <button type="button" data-ir="catalogo">Catálogo</button>
+      <button type="button" data-ir="mis-datos">Perfil</button>
+    </nav>
+  </header>
+
+  <main>
+    <div id="mensajes"></div>
+    <section id="pantalla-inicio" hidden></section>
+    <section id="pantalla-presupuestos" hidden></section>
+    <section id="pantalla-editor" hidden></section>
+    <section id="pantalla-clientes" hidden></section>
+    <section id="pantalla-catalogo" hidden></section>
+    <section id="pantalla-mis-datos" hidden></section>
+  </main>
+
+  <script src="vendor/jspdf.umd.min.js"></script>
+  <script src="vendor/jspdf.plugin.autotable.min.js"></script>
+  <script src="js/formato.js"></script>
+  <script src="js/calculos.js"></script>
+  <script src="js/numeracion.js"></script>
+  <script src="js/validacion.js"></script>
+  <script src="js/almacen.js"></script>
+  <script src="js/pdf.js"></script>
+  <script src="js/vigencia.js"></script>
+  <script src="js/ui/inicio.js"></script>
+  <script src="js/ui/presupuestos.js"></script>
+  <script src="js/ui/editor.js"></script>
+  <script src="js/ui/clientes.js"></script>
+  <script src="js/ui/catalogo.js"></script>
+  <script src="js/ui/mis-datos.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Pruebas de Presupuestos Pro</title>
+  <style>
+    body { font-family: system-ui, "Segoe UI", Arial, sans-serif; margin: 24px; color: #222; }
+    h1 { font-size: 22px; }
+    h2 { font-size: 17px; margin-top: 24px; border-bottom: 1px solid #ccc; padding-bottom: 4px; }
+    .caso { padding: 4px 8px; margin: 2px 0; border-radius: 4px; font-size: 14px; }
+    .ok { background: #e6f4ea; color: #1e6b34; }
+    .fallo { background: #fde8e8; color: #9b1c1c; }
+    .detalle { display: block; font-family: Consolas, monospace; font-size: 12px; margin-top: 2px; }
+    #resumen { font-size: 18px; font-weight: bold; padding: 10px; border-radius: 6px; }
+  </style>
+</head>
+<body>
+  <h1>Pruebas de Presupuestos Pro</h1>
+  <p>Cada fila es un caso de la especificación. Verde: correcto. Rojo: falla.</p>
+  <div id="resumen">Ejecutando pruebas...</div>
+  <div id="resultados"></div>
+
+  <script src="js/formato.js"></script>
+  <script src="js/calculos.js"></script>
+  <script src="js/vigencia.js"></script>
+  <script src="js/numeracion.js"></script>
+  <script src="js/validacion.js"></script>
+  <script src="tests/pruebas.js"></script>
+</body>
+</html>
