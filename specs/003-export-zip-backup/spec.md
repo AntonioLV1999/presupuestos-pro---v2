@@ -4,7 +4,7 @@
 
 **Created**: 2026-10-28
 
-**Status**: Draft
+**Status**: Publicada
 
 **Input**: User description: "Exportar todos mis presupuestos en un .zip: un botón «Exportar todo (.zip)» en la lista de presupuestos que descarga un único archivo comprimido con un PDF por presupuesto (el mismo que ya genera la app) y un archivo de datos con presupuestos, catálogo y perfil (logo incluido), como copia de seguridad. Solo lectura. Importar la copia queda fuera de alcance."
 

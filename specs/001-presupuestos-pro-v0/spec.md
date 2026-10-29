@@ -4,7 +4,7 @@
 
 **Created**: 2026-10-23
 
-**Status**: Clarified
+**Status**: Publicada
 
 **Input**: User description: "Presupuestos Pro v0: herramienta local para que cualquier freelancer configure su marca, mantenga un catálogo de servicios, calcule automáticamente base imponible, IVA (21 %), retención de IRPF (15 % o 7 %) y total, numere los presupuestos por año (AAAA-NNN) con validez de 30 días, y genere un PDF que la propia persona usuaria envía por correo a sus clientes."
 

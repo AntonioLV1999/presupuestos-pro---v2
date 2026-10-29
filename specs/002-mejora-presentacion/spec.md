@@ -4,7 +4,7 @@
 
 **Created**: 2026-10-27
 
-**Status**: Draft
+**Status**: Publicada
 
 **Input**: User description: "Mejorar la presentación de PresupuestosPro (aplicación ya implementada en la spec 001) con dos cambios, sin alterar ninguna funcionalidad ni dato existente: (1) página de inicio con navegación a las cuatro secciones, resumen de actividad y navegación común visible en todas las páginas; (2) rediseño visual profesional y sobrio de toda la aplicación y de la plantilla del PDF, con etiquetas visuales de vigencia (Vigente, Caducado) deducidas de la fecha de validez; los estados Borrador, Enviado, Aceptado y Rechazado quedan fuera (ver Fuera de alcance). Mobile-first, español de España, sin cambios en lógica de negocio, cálculos, API ni esquema de datos."
 
