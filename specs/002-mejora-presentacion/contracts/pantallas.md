@@ -51,7 +51,7 @@ Las cifras y el mensaje de lista vacía no cambian de valor ni de texto: siguen 
 |---|---|---|---|
 | Cabecera de tabla | Texto en negrita sobre `fondo` | Rótulo en `--peso-medio` sobre `superficie-alt`, con filete de refuerzo inferior | FR-023 |
 | Alineación de celdas | Arriba: el grupo de acciones queda ~17 px descolgado | **Centrada**: todos los elementos de la fila a la misma altura | FR-028 |
-| Alto de fila (≥ 640 px) | ~86 px | **52 px**, con los botones manteniendo 44 px | FR-028, FR-014 |
+| Alto de fila | ~86 px | **52 px desde 960 px**, con los botones manteniendo 44 px. Entre 640 y 959 px las acciones pueden pasar a una segunda línea para no provocar desplazamiento horizontal | FR-028, FR-014 |
 | Resalte de fila | No existe | `papel-hundido` al pasar el puntero, solo ≥ 640 px y con puntero real | FR-028 |
 | Columna «Total» | Alineada a la derecha, cifras proporcionales | Alineada a la derecha, **cifras de ancho constante**: las comas quedan en la misma vertical | FR-024 |
 | Separación Total / Estado | ~20 px | Al menos `--e-4` | FR-023 |

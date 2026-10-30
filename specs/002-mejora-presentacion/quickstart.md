@@ -15,7 +15,7 @@ Guía de comprobación de la revisión. **No hace falta leer código ni usar her
 
 ---
 
-## 1. Dirección visual (SC-006)
+## 1. Dirección visual (SC-006, SC-007)
 
 - [ ] La cabecera **no es una banda de color**: está sobre el mismo papel que el resto de la página, separada por una línea fina.
 - [ ] El fondo de la aplicación es un papel cálido, no un gris azulado.
@@ -23,6 +23,7 @@ Guía de comprobación de la revisión. **No hace falta leer código ni usar her
 - [ ] Recorriendo las seis pantallas se ven **solo dos tipografías**: una en marca y títulos, otra en textos, controles y números.
 - [ ] Ningún número aparece compuesto con la tipografía de títulos, **ni siquiera el total del presupuesto**.
 - [ ] El color rojizo oscuro solo aparece en la marca, en la señal de sección actual, en el botón principal, en los enlaces y en el total.
+- [ ] **Un único acento** (SC-007): recorre las seis pantallas y abre un PDF. El rojizo oscuro es **el mismo tono** en todos los sitios donde aparece y **no queda ningún azul** de la versión anterior en ningún elemento.
 
 ## 2. Navegación y títulos (SC-012)
 
@@ -46,7 +47,7 @@ Guía de comprobación de la revisión. **No hace falta leer código ni usar her
 - [ ] **Comas alineadas**: en la columna de totales, las comas decimales de los tres importes quedan en la misma vertical. Pide a alguien que diga cuál es el mayor: debe tardar menos de 3 segundos sin leer cifra a cifra.
 - [ ] **Fila alineada**: número, cliente, fecha, total, estado y botones están a la misma altura. Ningún grupo queda descolgado hacia abajo.
 - [ ] **Resalte**: al pasar el ratón por una fila, esa fila se resalta de forma perceptible.
-- [ ] **Densidad**: en un portátil normal se ven **al menos 8 presupuestos** sin desplazar la página.
+- [ ] **Densidad**: con la ventana del navegador **maximizada** en una pantalla de 1366 × 768, se ven sin desplazar la página **al menos 1,5 veces** los presupuestos que se veían antes del cambio (la cifra anotada en la línea base; por ejemplo, 6 si antes se veían 4).
 - [ ] **La etiqueta no es un botón**: enséñale la fila a tres personas y pídeles que abran un presupuesto. Ninguna debe intentar pulsar «Vigente» o «Caducado».
 - [ ] **Borrar se distingue**: pídeles que descarguen el PDF de un presupuesto. Ninguna debe pulsar «Borrar» por error. La acción de borrar está al final del grupo y separada de las otras dos.
 - [ ] Los números de presupuesto (`2026-001`, `2026-002`…) quedan alineados entre sí.
@@ -68,6 +69,7 @@ Guía de comprobación de la revisión. **No hace falta leer código ni usar her
 ## 6. Móvil y pantallas estrechas (SC-008)
 
 - [ ] Reduce la ventana a 320 px de ancho. **No aparece desplazamiento horizontal** en ninguna de las seis pantallas.
+- [ ] Repite con la ventana a **640 px** y a **768 px** de ancho, con especial atención al listado de presupuestos: **no aparece desplazamiento horizontal**. A estos anchos las acciones de una fila pueden pasar a una segunda línea; es lo esperado.
 - [ ] Los listados se presentan como tarjetas legibles.
 - [ ] El texto se lee sin ampliar y los botones se pulsan con comodidad.
 - [ ] En táctil, ninguna fila se queda «resaltada» después de tocarla.
@@ -112,5 +114,6 @@ Comprobaciones técnicas que conviene hacer antes de dar la fase por cerrada:
 - `js/tema.js` contiene los 13 nombres de siempre, con valores nuevos, más `borde-fuerte`, `superficie-alt` y `papel-hundido`. Ningún nombre renombrado ni eliminado.
 - `vendor/` no tiene ningún archivo nuevo (FR-016, FR-022).
 - Con la pestaña Red abierta, recargar `index.html` no genera **ninguna** petición.
-- Medir con una herramienta de contraste los diez pares listados en [contracts/tema.md](contracts/tema.md): todos deben llegar a 4,5:1.
-- En el listado, el alto de fila en escritorio es de unos 52 px y los botones conservan 44 px.
+- Medir con una herramienta de contraste los diez pares listados en [contracts/tema.md](contracts/tema.md): todos deben llegar a 4,5:1. Medir también `papel-hundido` frente a `fondo`: al menos 1,15:1.
+- En el listado, a partir de 960 px, el alto de fila es de unos 52 px y los botones conservan 44 px.
+- Garantía de un único punto de definición (FR-009; apoyo a SC-007): cambiar temporalmente `acento` en `js/tema.js`, recargar y comprobar que cambia en todas las pantallas y en el PDF; después, deshacer el cambio.

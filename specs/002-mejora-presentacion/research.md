@@ -49,13 +49,17 @@ Contrastes calculados sobre los valores elegidos (pendientes de confirmar con he
 | `texto` sobre `fondo` | ≈ 16,5:1 | ✔ |
 | `texto` sobre `superficie` | ≈ 17,4:1 | ✔ |
 | `texto` sobre `superficie-alt` | ≈ 15,4:1 | ✔ |
-| `texto` sobre `papel-hundido` | ≈ 15,2:1 | ✔ |
+| `texto` sobre `papel-hundido` | ≈ 14,2:1 | ✔ |
+| `suave` sobre `papel-hundido` | ≈ 4,8:1 | ✔ |
+| `papel-hundido` frente a `fondo` *(superficie, umbral 1,15:1)* | ≈ 1,16:1 | ✔ |
 | `suave` sobre `superficie` | ≈ 5,9:1 | ✔ |
 | `suave` sobre `fondo` | ≈ 5,6:1 | ✔ |
 | `superficie` sobre `acento` | ≈ 8,1:1 | ✔ |
 | `exito` sobre `exito-fondo` | ≈ 5,2:1 | ✔ |
 | `aviso` sobre `aviso-fondo` | ≈ 5,9:1 | ✔ |
 | `error` sobre `error-fondo` | ≈ 5,7:1 | ✔ |
+
+**Corrección tras `/speckit-analyze`**: `papel-hundido` pasa de `#F2EFE7` a `#EDE8DC`. El valor inicial solo daba ~1,09:1 frente a `fondo`, y el resalte de fila (FR-028, historia 6, escenario 3) corría el riesgo de no percibirse en pantallas de portátil corrientes. El nuevo valor llega a ~1,16:1 y mantiene el contraste AA de todo texto que se pinta encima.
 
 **Alternatives considered**:
 - *Mantener el azul y limitarse a corregir espaciado y densidad*: habría resuelto los defectos 3, 5, 6 y 7 pero no el 2 (color sin significado) ni la sensación de documento, que es el objetivo de R2.
@@ -117,11 +121,24 @@ La codificación por defecto de las familias núcleo cubre `€`, vocales acentu
 
 ## R8 — Densidad de fila compatible con los 44 px táctiles
 
-**Decisión**: en anchos ≥ 640 px, las celdas pasan a alineación vertical centrada y su relleno vertical baja al escalón menor de la escala de espaciado. Con los botones de acción manteniendo sus 44 px, la fila queda en **52 px**, por debajo del tope de 56 px y sin tocar el mínimo táctil de FR-014.
+**Decisión**: en anchos ≥ 640 px, las celdas pasan a alineación vertical centrada y su relleno vertical baja al escalón menor de la escala de espaciado. Con los botones de acción manteniendo sus 44 px, la fila queda en **52 px** sin tocar el mínimo táctil de FR-014. Las reglas que impiden partir líneas —columnas ajustadas al contenido y acciones en una sola línea— se aplican **solo desde 960 px**; entre 640 y 959 px las acciones pueden pasar a una segunda línea.
 
-**Rationale**: el defecto 7 del diagnóstico tiene dos causas independientes. La primera es que las celdas se alinean arriba, lo que descuelga el grupo de botones respecto al texto de su fila; se corrige centrando. La segunda es el exceso de relleno: 44 px de botón más 8 px arriba y 8 px abajo dan 60 px por fila. Bajando el relleno a 4 px se llega a 52 px sin reducir ningún control. En una pantalla de portátil de 768 px de alto eso deja ver 9 presupuestos sin desplazar, por encima de los 8 que exige SC-014.
+**Rationale**: el defecto 7 del diagnóstico tiene dos causas independientes. La primera es que las celdas se alinean arriba, lo que descuelga el grupo de botones respecto al texto de su fila; se corrige centrando. La segunda es el exceso de relleno: 44 px de botón más 8 px arriba y 8 px abajo dan 60 px por fila. Bajando el relleno a 4 px se llega a 52 px sin reducir ningún control.
 
-En móvil no aplica: por debajo de 640 px las tablas siguen colapsando a tarjetas, como en R1.
+**Por qué el umbral de 960 px**: en el listado de presupuestos, las columnas que no deben partirse (número, fecha, total, estado) más las tres acciones con su separación suman unos **720 px**. A 640 px de ventana, el contenido útil es de unos 592 px. Si esas columnas no pueden partirse ya desde 640 px, la tabla desborda y aparece desplazamiento horizontal entre ~640 y ~800 px, en contra de FR-014. A partir de 960 px hay más de 900 px útiles y cabe con holgura.
+
+**Cuántas filas caben** *(cálculo corregido tras `/speckit-analyze`)*: la primera versión de este apartado decía que en una pantalla de 768 px de alto cabían 9 presupuestos. **Era un error**: no descontaba la interfaz del navegador ni la parte de la página que queda por encima de la tabla. Cálculo corregido para una ventana maximizada en una pantalla de 1366 × 768:
+
+| | R1 | R2 |
+|---|---|---|
+| Alto útil de la ventana (pantalla − barra de tareas − interfaz del navegador) | ≈ 630 px | ≈ 630 px |
+| Por encima de la primera fila (cabecera, relleno, título, barra de acciones, `thead`) | ≈ 260 px | ≈ 290 px (el título gana la línea del recuento) |
+| Alto de fila | 86 px | 52 px |
+| **Filas visibles** | **≈ 4** | **≈ 6** |
+
+La mejora real es de **≈ 1,5×**, no de 8 filas absolutas. Por eso SC-014 se expresa en relación con la línea base que se mide en T003 y no como una cifra fija. El margen es justo: si la medición se queda corta, la primera palanca es bajar el margen inferior del bloque de título de `--e-5` a `--e-4`, que no toca ningún mínimo táctil ni de legibilidad.
+
+En móvil no aplica: por debajo de 640 px las tablas siguen colapsando a bloques, como en R1.
 
 **Alternatives considered**: reducir los botones de acción por debajo de 44 px en escritorio; descartado porque FR-014 no distingue entre tamaños de pantalla y la profesional puede usar un portátil táctil.
 
@@ -148,7 +165,7 @@ En móvil no aplica: por debajo de 640 px las tablas siguen colapsando a tarjeta
 | R5 | PDF con `times` y `helvetica`, familias núcleo, cero bytes | FR-016, FR-022 |
 | R6 | Sin iconos | Constitución I |
 | R7 | Título con complemento de contexto | FR-026 |
-| R8 | Fila de 52 px con botones de 44 px | FR-028, FR-014 |
+| R8 | Fila de 52 px con botones de 44 px; sin partir líneas solo desde 960 px | FR-028, FR-014, SC-014 |
 | R9 | Resalte de fila solo con puntero y ≥ 640 px | FR-028 |
 
 **Ningún `NEEDS CLARIFICATION` queda abierto.**

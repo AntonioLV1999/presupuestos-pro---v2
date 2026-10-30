@@ -32,7 +32,7 @@ Cada nombre se publica como variable CSS `--<nombre>` y queda disponible para el
 |---|---|---|
 | `borde-fuerte` | `#CFC7B8` | Filete de refuerzo de 2 px: cabecera de tabla, regla del total, cierre de sección |
 | `superficie-alt` | `#F4F1EA` | Cabecera de tabla, fila de total, zonas de reposo |
-| `papel-hundido` | `#F2EFE7` | Resalte de fila al pasar el puntero (FR-028) |
+| `papel-hundido` | `#EDE8DC` | Resalte de fila al pasar el puntero (FR-028). Debe contrastar **al menos 1,15:1** con `fondo` para que el resalte se perciba |
 
 ### Reglas de uso del color
 
@@ -48,6 +48,8 @@ Todos los pares texto/fondo deben alcanzar **4,5:1**. Pares a medir en la fase d
 `texto`/`fondo` · `texto`/`superficie` · `texto`/`superficie-alt` · `texto`/`papel-hundido` · `suave`/`superficie` · `suave`/`fondo` · `superficie`/`acento` · `exito`/`exito-fondo` · `aviso`/`aviso-fondo` · `error`/`error-fondo`
 
 Valores calculados en [research.md](../research.md), apartado R3. El indicador de foco usa `acento`, que sobre papel supera 3:1 con holgura (FR-012a).
+
+Umbral de superficie, no de texto: `papel-hundido` frente a `fondo` debe llegar a **1,15:1** como mínimo. Por debajo, el resalte de fila de FR-028 no se distingue en pantallas de portátil corrientes.
 
 ## Tipografía (`css/estilos.css`, bloque `:root`)
 
@@ -89,8 +91,8 @@ El salto entre `--t-xl` y `--t-l` es de 10 px, suficiente para que título de pa
 - **Radio**: `--radio` 4 px, solo en controles y campos. Las superficies de contenido —tablas, bloques de sección, totales— van a **radio 0**: la dirección es de papel, no de tarjetas.
 - **Filetes**: `--filete` 1 px con `borde`; `--filete-fuerte` 2 px con `borde-fuerte`.
 - **Separación por filetes, no por cajas** (FR-023): los bloques que en R1 eran recuadros blancos con contorno sobre fondo gris pasan a separarse con reglas horizontales y espacio.
-- **Densidad de listado** en anchos ≥ 640 px: alineación vertical centrada en todas las celdas y relleno vertical de `--e-1`, lo que deja la fila en **52 px** manteniendo los botones en 44 px (FR-028, FR-014). Ver [research.md](../research.md), apartado R8.
-- **Ancho de columna** en los listados: se reparte por el contenido, no por el ancho del encabezado. La columna de total y la etiqueta de estado mantienen al menos `--e-4` de separación.
+- **Densidad de listado** en anchos ≥ 640 px: alineación vertical centrada en todas las celdas y relleno vertical de `--e-1`, lo que deja la fila en **52 px** cuando las acciones caben en una línea, manteniendo los botones en 44 px (FR-028, FR-014). Ver [research.md](../research.md), apartado R8.
+- **Ancho de columna** en los listados, **solo desde 960 px**: las columnas de datos y de acciones se ajustan a su contenido, sin partir líneas, y el espacio sobrante va al cliente o al concepto. Entre 640 y 959 px no se fuerza: las acciones pueden pasar a una segunda línea, porque forzarlo provoca desplazamiento horizontal (FR-014). La columna de total y la etiqueta de estado mantienen al menos `--e-4` de separación en todos los anchos de tabla.
 
 ## Puntos de corte (mobile-first)
 

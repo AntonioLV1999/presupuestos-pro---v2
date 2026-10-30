@@ -17,7 +17,7 @@
 | Rev | Fecha | Alcance |
 |---|---|---|
 | **R1** | 2026-10-27 | Versión publicada: inicio, navegación común, resumen de actividad, rediseño sobrio (azul marino de acento), etiquetas de vigencia y nueva plantilla de PDF. |
-| **R2** | 2026-10-30 | **Esta revisión.** Sustituye la dirección visual por «Despacho». Modifica FR-008, FR-011, FR-016 y SC-006; añade FR-023 a FR-030 y SC-011 a SC-016; reescribe las historias 3, 5 y 6. **No cambia** el alcance funcional de R1 (FR-001 a FR-007) ni ninguna garantía de no regresión (FR-019 a FR-022). Origen: [`pre-spec-despacho.md`](pre-spec-despacho.md). |
+| **R2** | 2026-10-30 | **Esta revisión.** Sustituye la dirección visual por «Despacho». **Modifica** FR-006a, FR-008, FR-009, FR-011, FR-012a, FR-014, FR-016, FR-022, SC-006, SC-007 y SC-008 (cada uno marcado *(revisado en R2)* junto a su texto de R1) y actualiza la redacción de FR-003 sin cambiar su fondo; **añade** FR-023 a FR-030 y SC-011 a SC-016; reescribe las historias 3 y 5, añade la 6 y un escenario nuevo a las historias 2 y 4. **No cambia** el alcance funcional de R1 (FR-001 a FR-007) ni ninguna garantía de no regresión (FR-019 a FR-022): las modificaciones de esos grupos solo precisan o amplían lo que ya exigían. Origen: [`pre-spec-despacho.md`](pre-spec-despacho.md). |
 
 > **Nota de numeración**: los requisitos FR-023 a FR-030 pertenecen a la serie propia de esta spec 002. La spec 001 tiene sus propios FR-028 a FR-030 con otro significado (contenido obligatorio del PDF); cuando esta spec se refiere a ellos lo hace siempre diciendo «spec 001, FR-0xx».
 
@@ -149,28 +149,33 @@ En el listado de presupuestos y en los demás listados, la profesional compara i
 
 ### Functional Requirements
 
-**Inicio y navegación** *(sin cambios en R2)*
+**Inicio y navegación** *(sin cambios funcionales en R2; FR-006a revisado en su presentación)*
 
 - **FR-001**: Al abrir la aplicación, la pantalla mostrada por defecto DEBE ser una pantalla de inicio.
 - **FR-002**: El inicio DEBE ofrecer accesos claros y diferenciados a Presupuestos, Clientes, Catálogo y Perfil.
 - **FR-003**: La sección que antes se llamaba «Mis datos» DEBE llamarse «Perfil» en todos los textos visibles; su contenido y comportamiento no cambian.
+  *(Redacción actualizada en R2, sin cambio de fondo. R1 decía: «La sección que hoy se llama «Mis datos» DEBE pasar a llamarse «Perfil»…», escrito antes de que el cambio estuviera hecho.)*
 - **FR-004**: Todas las pantallas, incluido el editor de presupuesto, DEBEN mostrar una navegación común con acceso a Inicio y a las cuatro secciones, e indicar la sección actual. Mientras se edita un presupuesto, la sección indicada es «Presupuestos».
 - **FR-005**: El inicio DEBE mostrar un resumen de actividad con: número total de presupuestos, número de presupuestos vigentes y caducados, número de clientes y número de servicios del catálogo.
 - **FR-006**: Si no hay datos, el inicio DEBE mostrar contadores a cero y un acceso directo para crear el primer presupuesto.
-- **FR-006a**: El inicio DEBE incluir siempre un botón «Nuevo presupuesto» que abra el editor, integrado visualmente en un bloque de la pantalla y no suelto entre dos grupos de contenido.
+- **FR-006a** *(revisado en R2)*: El inicio DEBE incluir siempre un botón «Nuevo presupuesto» que abra el editor, integrado visualmente en un bloque de la pantalla y no suelto entre dos grupos de contenido.
+  *(R1 decía: «El inicio DEBE incluir siempre un botón «Nuevo presupuesto» que abra el editor.»)*
 - **FR-007**: El resumen DEBE calcularse solo a partir de los datos ya guardados, sin pedir ningún dato nuevo a la profesional.
 
 **Apariencia** *(FR-008 y FR-011 revisados en R2)*
 
 - **FR-008** *(revisado en R2)*: La aplicación DEBE usar **exactamente dos familias tipográficas con papeles disjuntos y excluyentes**: una para títulos, marca y rótulos, y otra para textos corrientes, controles y todos los datos numéricos. La escala de tamaños DEBE seguir estando definida en un único lugar y DEBE presentar un salto perceptible entre el título de pantalla y el título de bloque.
   *(R1 decía: «una única familia tipográfica».)*
-- **FR-009**: Los colores DEBEN limitarse a una paleta reducida (neutros, un color de acento y colores para éxito, aviso y error) definida en un único lugar, de modo que cambiarla allí la cambie en toda la aplicación y en el PDF.
+- **FR-009** *(revisado en R2)*: Los colores DEBEN limitarse a una paleta reducida (neutros, un color de acento y colores para éxito, aviso y error) definida en un único lugar, de modo que cambiarla allí la cambie en toda la aplicación y en el PDF.
+  *(R1 decía: «…de modo que cambiarla allí la cambie en toda la aplicación.»)*
 - **FR-010**: El espaciado DEBE seguir una escala uniforme definida también en un único lugar.
 - **FR-011** *(revisado en R2)*: Títulos, tablas, formularios y bloques de totales DEBEN tener una jerarquía visual clara. El total final del presupuesto DEBE ocupar un escalón tipográfico propio, mayor que el de cualquier otro texto o importe de la pantalla, y DEBE estar separado del resto por una línea de refuerzo.
 - **FR-012**: Los mensajes de validación y error DEBEN ser claramente distinguibles de la información normal y no depender solo del color.
-- **FR-012a**: Todos los controles interactivos (navegación, botones, campos) DEBEN mostrar un indicador de foco visible y poder usarse con el teclado, también sobre fondos claros.
+- **FR-012a** *(revisado en R2)*: Todos los controles interactivos (navegación, botones, campos) DEBEN mostrar un indicador de foco visible y poder usarse con el teclado, también sobre fondos claros.
+  *(R1 decía: «Todos los controles interactivos (menú, botones, campos) DEBEN mostrar un indicador de foco visible y poder usarse con el teclado.»)*
 - **FR-013**: Cada presupuesto DEBE mostrar una etiqueta de estado deducida solo de su fecha de validez: «Caducado» si la fecha de validez es anterior al día actual y «Vigente» en caso contrario; el día actual es la fecha local del ordenador de la profesional. Las etiquetas DEBEN ser visualmente distintas y con el texto siempre visible. NO se almacena ningún estado nuevo ni se añaden los estados Borrador, Enviado, Aceptado y Rechazado.
-- **FR-014**: El diseño DEBE seguir siendo mobile-first, sin desplazamiento horizontal de la página en anchos desde 320 px, y con controles táctiles cómodos: al menos 44 px de alto y texto base de al menos 16 px en los campos.
+- **FR-014** *(revisado en R2)*: El diseño DEBE seguir siendo mobile-first, sin desplazamiento horizontal de la página en **ningún** ancho a partir de 320 px (no solo en el mínimo), y con controles táctiles cómodos: al menos 44 px de alto y texto base de al menos 16 px en los campos.
+  *(R1 decía: «…sin desplazamiento horizontal de la página en anchos desde 320 px, y con controles táctiles cómodos: al menos 44 px de alto y texto base de al menos 16 px.»)*
 - **FR-015**: El diseño DEBE ser legible y utilizable también en pantallas de ordenador.
 
 **Dirección visual «Despacho»** *(nuevo en R2)*
@@ -190,12 +195,13 @@ En el listado de presupuestos y en los demás listados, la profesional compara i
 - **FR-017**: El PDF DEBE conservar exactamente el contenido obligatorio de la spec 001 (FR-028 a FR-030), con los mismos importes y sin la palabra «factura».
 - **FR-018**: El PDF DEBE mantener una maquetación correcta con y sin logo, con datos opcionales vacíos, con textos largos y con tablas de varias páginas.
 
-**Sin regresión** *(sin cambios en R2)*
+**Sin regresión** *(sin cambios de fondo en R2; FR-022 precisado)*
 
 - **FR-019**: NO DEBE cambiar ninguna regla de negocio, cálculo, numeración, validación, forma de guardar datos ni límite de la spec 001.
 - **FR-020**: NO DEBE cambiar ningún dato ya guardado ni requerirse migración de datos.
 - **FR-021**: Todos los textos nuevos o modificados DEBEN estar en español de España, y los importes en euros con formato español.
 - **FR-022**: La aplicación DEBE seguir funcionando sin conexión, sin cuentas y sin enviar datos a ningún servidor externo; esto incluye las tipografías, que no pueden depender de recursos externos ni descargarse.
+  *(Revisado en R2. R1 decía: «…esto incluye las tipografías, que no pueden depender de recursos externos.»)*
 
 ### Key Entities
 
@@ -212,14 +218,16 @@ En el listado de presupuestos y en los demás listados, la profesional compara i
 - **SC-004**: Los datos guardados antes de la mejora siguen disponibles sin cambios en el 100 % de los casos, y todos los escenarios de la spec 001 (importes, numeración, validaciones, PDF) dan los mismos resultados que antes.
 - **SC-005**: Una persona no técnica identifica, en menos de 5 segundos y sin ayuda, el estado de cualquier presupuesto del listado.
 - **SC-006** *(revisado en R2)*: En una revisión de todas las pantallas y del PDF solo se observan **dos** familias tipográficas, cada una en su papel declarado —una en títulos y rótulos, otra en textos y en todos los números—, y una paleta de colores limitada.
-- **SC-007**: Cambiar el color de acento en su único punto de definición se refleja en el 100 % de las pantallas y en el PDF.
-- **SC-008**: Ninguna pantalla presenta desplazamiento horizontal de la página en un ancho de 320 px.
+- **SC-007** *(revisado en R2)*: Una persona no técnica que recorre las seis pantallas y abre un PDF comprueba que el color de acento es el mismo en todos los sitios donde aparece, y no encuentra ningún elemento con el azul de R1 ni con un tono de acento distinto.
+  *(R1 decía: «Cambiar el color de acento en su único punto de definición se refleja en el 100 % de las pantallas». Ese criterio solo se podía verificar editando el código, en contra del principio IV de la constitución. La garantía de un único punto de definición sigue exigida por FR-009 y la comprueba el implementador.)*
+- **SC-008** *(revisado en R2)*: Ninguna pantalla presenta desplazamiento horizontal de la página con la ventana a 320 px, a 640 px y a 768 px de ancho, ni maximizada.
+  *(R1 decía: «…en un ancho de 320 px». Se añaden anchos intermedios porque es donde un listado con columnas que no se parten puede desbordar.)*
 - **SC-009**: Tres personas no técnicas consideran, tras ver el PDF, que el documento tiene aspecto profesional y que puede enviarse a un cliente.
 - **SC-010**: El 100 % de los PDF generados mantienen todos los elementos obligatorios y ninguno contiene la palabra «factura».
 - **SC-011** *(nuevo en R2)*: En un listado con al menos tres importes de distinta longitud, el 100 % de las comas decimales quedan en la misma vertical, y una persona no técnica dice cuál es el importe mayor en menos de 3 segundos sin leer cifra a cifra.
 - **SC-012** *(nuevo en R2)*: Una persona no técnica señala en menos de 3 segundos en qué sección está, sin que se le indique dónde mirar.
 - **SC-013** *(nuevo en R2)*: Ninguna de tres personas no técnicas intenta pulsar la etiqueta de estado de un presupuesto creyendo que es un botón.
-- **SC-014** *(nuevo en R2)*: En una pantalla de ordenador portátil habitual, se ven al menos 8 presupuestos del listado sin desplazar la página, frente a los 5 de R1.
+- **SC-014** *(nuevo en R2)*: Con la ventana del navegador maximizada en una pantalla de 1366 × 768, el listado muestra sin desplazar la página **al menos 1,5 veces** los presupuestos que mostraba R1 en esa misma ventana, contados antes de empezar el cambio (por ejemplo, 6 si antes se veían 4).
 - **SC-015** *(nuevo en R2)*: Tres personas no técnicas, con el PDF impreso en blanco y negro, identifican en menos de 10 segundos quién emite, para quién es, el número, la fecha de validez y el total.
 - **SC-016** *(nuevo en R2)*: Ninguna de tres personas no técnicas pulsa por error la acción de borrar cuando se les pide abrir o descargar un presupuesto del listado.
 
@@ -243,7 +251,7 @@ En el listado de presupuestos y en los demás listados, la profesional compara i
 - La tipografía de títulos no se usa en ningún número porque las alternativas de respaldo habituales componen cifras de ancho desigual, lo que rompería la alineación exigida por FR-024. **Esto incluye el total del presupuesto**, que destaca por tamaño y separación, no por cambio de familia.
 - El PDF se resuelve con las tipografías que su generador ya ofrece de serie, sin incrustar archivos nuevos (FR-016, FR-022).
 - **Sin iconos**: la dirección se expresa solo con tipografía, color y líneas. No se incorpora ninguna librería de iconos ni se dibujan glifos propios, en aplicación del principio de simplicidad de la constitución.
-- **Título de pantalla (FR-026)**: por defecto, el título incorpora el recuento de elementos de la sección (por ejemplo, «Presupuestos · 3»). Alternativas revisables en `/speckit-clarify`.
+- **Título de pantalla (FR-026)**: por defecto, el título lleva debajo una línea secundaria con el recuento de elementos de la sección (por ejemplo, «Presupuestos» y debajo «3 guardados»). En Inicio, que no tiene nada que contar, el título nombra lo que muestra («Resumen de actividad»). Alternativas revisables en `/speckit-clarify`.
 - **Acción destructiva (FR-029)**: por defecto se distingue por su posición al final del grupo de acciones, separada de las demás, además del color. Alternativa revisable en `/speckit-clarify`.
 - Se mantienen los mismos puntos de corte responsive de R1; la revisión no añade ninguno.
 - La relación con la spec 003 no cambia: el paquete `.zip` seguirá conteniendo los mismos archivos, con el PDF ya rediseñado.
