@@ -78,7 +78,7 @@ specs/002-mejora-presentacion/
 
 ```text
 index.html                   # Cabecera y navegación; orden de carga de scripts sin cambios
-pruebas.html                 # Misma hoja de estilos; sin cambios de lógica
+pruebas.html                 # No carga tema.js ni estilos.css: R2 no le afecta; sin cambios
 css/
 └── estilos.css              # CAMBIO MAYOR: tipografía, densidad, filetes, estados
 js/
