@@ -6,7 +6,7 @@
 
 **Última revisión**: 2026-10-30 (R2 — dirección visual «Despacho»)
 
-**Status**: Revisión prevista. La 002 está **Publicada** en `main`; esta revisión pasa a **En Curso** al ejecutar `/speckit.plan` y vuelve a **Publicada** en el merge.
+**Status**: **En Curso** (revisión R2, desde 2026-10-30, al ejecutar `/speckit.plan`). La versión publicada de la 002 sigue vigente en `main`; esta revisión vuelve a **Publicada** en el merge.
 
 **Input**: User description (R1, 2026-10-27): "Mejorar la presentación de PresupuestosPro (aplicación ya implementada en la spec 001) con dos cambios, sin alterar ninguna funcionalidad ni dato existente: (1) página de inicio con navegación a las cuatro secciones, resumen de actividad y navegación común visible en todas las páginas; (2) rediseño visual profesional y sobrio de toda la aplicación y de la plantilla del PDF, con etiquetas visuales de vigencia (Vigente, Caducado) deducidas de la fecha de validez; los estados Borrador, Enviado, Aceptado y Rechazado quedan fuera (ver Fuera de alcance). Mobile-first, español de España, sin cambios en lógica de negocio, cálculos, API ni esquema de datos."
 
