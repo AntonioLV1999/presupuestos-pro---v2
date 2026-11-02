@@ -6,7 +6,11 @@
 
 **Última revisión**: 2026-10-30 (R2 — dirección visual «Despacho»)
 
-**Status**: **En Curso** (revisión R2, desde 2026-10-30, al ejecutar `/speckit.plan`). La versión publicada de la 002 sigue vigente en `main`; esta revisión vuelve a **Publicada** en el merge.
+**Status**: **Publicada** (revisión R2, integrada en `main` el 2026-11-02).
+
+> **Cierre de R2 — criterios sin cumplir o sin verificar**, aceptados al cerrar:
+> - **SC-014 no se cumple**: en la misma ventana, el listado muestra 6 presupuestos frente a 5 de R1 (1,2×, no 1,5×). La línea del recuento del título (FR-026) se come lo que se gana con filas más bajas. Detalle y alternativa en `tasks.md`, checkpoint de US6.
+> - **Validación con personas, pendiente**: SC-005, SC-009, SC-012, SC-013, SC-015 y SC-016, y las comprobaciones manuales de T039 (teclado, ratón, PDF impreso, descarga del `.zip`).
 
 **Input**: User description (R1, 2026-10-27): "Mejorar la presentación de PresupuestosPro (aplicación ya implementada en la spec 001) con dos cambios, sin alterar ninguna funcionalidad ni dato existente: (1) página de inicio con navegación a las cuatro secciones, resumen de actividad y navegación común visible en todas las páginas; (2) rediseño visual profesional y sobrio de toda la aplicación y de la plantilla del PDF, con etiquetas visuales de vigencia (Vigente, Caducado) deducidas de la fecha de validez; los estados Borrador, Enviado, Aceptado y Rechazado quedan fuera (ver Fuera de alcance). Mobile-first, español de España, sin cambios en lógica de negocio, cálculos, API ni esquema de datos."
 
@@ -17,7 +21,7 @@
 | Rev | Fecha | Alcance |
 |---|---|---|
 | **R1** | 2026-10-27 | Versión publicada: inicio, navegación común, resumen de actividad, rediseño sobrio (azul marino de acento), etiquetas de vigencia y nueva plantilla de PDF. |
-| **R2** | 2026-10-30 | **Esta revisión.** Sustituye la dirección visual por «Despacho». **Modifica** FR-006a, FR-008, FR-009, FR-011, FR-012a, FR-014, FR-016, FR-022, SC-006, SC-007 y SC-008 (cada uno marcado *(revisado en R2)* junto a su texto de R1) y actualiza la redacción de FR-003 sin cambiar su fondo; **añade** FR-023 a FR-030 y SC-011 a SC-016; reescribe las historias 3 y 5, añade la 6 y un escenario nuevo a las historias 2 y 4. **No cambia** el alcance funcional de R1 (FR-001 a FR-007) ni ninguna garantía de no regresión (FR-019 a FR-022): las modificaciones de esos grupos solo precisan o amplían lo que ya exigían. Origen: [`pre-spec-despacho.md`](pre-spec-despacho.md). |
+| **R2** | 2026-10-30 → publicada el 2026-11-02 | **Esta revisión.** Sustituye la dirección visual por «Despacho». **Modifica** FR-006a, FR-008, FR-009, FR-011, FR-012a, FR-014, FR-016, FR-022, SC-006, SC-007 y SC-008 (cada uno marcado *(revisado en R2)* junto a su texto de R1) y actualiza la redacción de FR-003 sin cambiar su fondo; **añade** FR-023 a FR-030 y SC-011 a SC-016; reescribe las historias 3 y 5, añade la 6 y un escenario nuevo a las historias 2 y 4. **No cambia** el alcance funcional de R1 (FR-001 a FR-007) ni ninguna garantía de no regresión (FR-019 a FR-022): las modificaciones de esos grupos solo precisan o amplían lo que ya exigían. Origen: [`pre-spec-despacho.md`](pre-spec-despacho.md). |
 
 > **Nota de numeración**: los requisitos FR-023 a FR-030 pertenecen a la serie propia de esta spec 002. La spec 001 tiene sus propios FR-028 a FR-030 con otro significado (contenido obligatorio del PDF); cuando esta spec se refiere a ellos lo hace siempre diciendo «spec 001, FR-0xx».
 

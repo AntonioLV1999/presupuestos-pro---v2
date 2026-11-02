@@ -62,5 +62,3 @@ Resultado: **todos los puntos superados**. Detalle de lo revisado en esta iterac
 ## Notes
 
 - Items marked incomplete require spec updates before `/speckit-clarify` or `/speckit-plan`
-- Pendiente de actualizar en la fase de planificación: `contracts/tema.md`, `contracts/pantallas.md`,
-  `contracts/pdf.md` y `quickstart.md`, que todavía describen la dirección visual de R1.
