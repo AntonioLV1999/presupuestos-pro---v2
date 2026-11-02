@@ -1,0 +1,7 @@
+# Archivos del sistema y de editores (el proyecto no tiene dependencias ni compilación)
+.DS_Store
+Thumbs.db
+*.tmp
+*.swp
+.vscode/
+.idea/

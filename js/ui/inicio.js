@@ -17,11 +17,14 @@
   }
 
   function mostrar(seccion) {
-    seccion.appendChild(App.el('h2', { text: 'Inicio' }));
+    seccion.appendChild(App.titulo('Resumen de actividad'));
+
+    // El resumen, su aviso y el botón principal forman un único bloque (FR-006a).
+    var bloque = App.el('div', { class: 'bloque-resumen' });
 
     if (!App.estaBloqueado()) {
       var r = Vigencia.resumen(App.estado, Formato.hoy());
-      seccion.appendChild(App.el('div', { class: 'resumen' }, [
+      bloque.appendChild(App.el('div', { class: 'resumen' }, [
         cifra('Presupuestos', r.total),
         cifra('Vigentes', r.vigentes),
         cifra('Caducados', r.caducados),
@@ -29,16 +32,17 @@
         cifra('Servicios del catálogo', r.servicios)
       ]));
       if (r.total === 0) {
-        seccion.appendChild(App.el('p', {
+        bloque.appendChild(App.el('p', {
           class: 'vacio',
           text: 'Todavía no tienes presupuestos. Pulsa «Nuevo presupuesto» para crear el primero.'
         }));
       }
     }
 
-    seccion.appendChild(App.el('div', { class: 'acciones' }, [
+    bloque.appendChild(App.el('div', { class: 'acciones' }, [
       App.el('button', { type: 'button', class: 'primario', text: 'Nuevo presupuesto', onclick: function () { App.ir('editor'); } })
     ]));
+    seccion.appendChild(bloque);
 
     seccion.appendChild(App.el('div', { class: 'accesos' }, ACCESOS.map(function (a) {
       return App.el('button', { type: 'button', class: 'acceso', onclick: function () { App.ir(a.destino); } }, [

@@ -3,19 +3,22 @@
   'use strict';
 
   var colores = {
-    'texto': '#1f2933',
-    'suave': '#52606d',
-    'borde': '#d9dee3',
-    'fondo': '#f5f7f9',
-    'superficie': '#ffffff',
-    'acento': '#1f4b78',
-    'acento-oscuro': '#163757',
-    'exito': '#1e6b34',
-    'exito-fondo': '#e6f4ea',
-    'aviso': '#8a5a00',
-    'aviso-fondo': '#fff4dc',
-    'error': '#b42318',
-    'error-fondo': '#fdecea'
+    'texto': '#1C1A17',
+    'suave': '#6B6459',
+    'borde': '#E6E1D8',
+    'fondo': '#FBF9F5',
+    'superficie': '#FFFFFF',
+    'acento': '#8C2F39',
+    'acento-oscuro': '#6E242C',
+    'exito': '#4F6B4A',
+    'exito-fondo': '#EDF2EB',
+    'aviso': '#7C5415',
+    'aviso-fondo': '#F7EFE0',
+    'error': '#B3261E',
+    'error-fondo': '#FBEDEB',
+    'borde-fuerte': '#CFC7B8',
+    'superficie-alt': '#F4F1EA',
+    'papel-hundido': '#EDE8DC'
   };
 
   /** Color como [r, g, b] para jsPDF. */

@@ -39,6 +39,14 @@
     return el('div', {}, [el('label', { text: etiqueta }), control]);
   }
 
+  /** Título de pantalla con su complemento de contexto, para no repetir sin más el menú (FR-026). */
+  function titulo(texto, complemento) {
+    return el('div', { class: 'titulo-pantalla' }, [
+      el('h2', { text: texto }),
+      complemento ? el('p', { class: 'complemento', text: complemento }) : null
+    ]);
+  }
+
   function mensaje(texto, tipo, lista) {
     var zona = document.getElementById('mensajes');
     zona.innerHTML = '';
@@ -116,6 +124,7 @@
     estado: null,
     el: el,
     campo: campo,
+    titulo: titulo,
     mensaje: mensaje,
     mostrarErrores: mostrarErrores,
     cambiar: cambiar,

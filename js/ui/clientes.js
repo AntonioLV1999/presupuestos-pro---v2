@@ -65,7 +65,7 @@
   }
 
   function mostrar(seccion) {
-    seccion.appendChild(App.el('h2', { text: 'Clientes' }));
+    seccion.appendChild(App.titulo('Clientes', Formato.recuento(App.estado.clientes.length, 'guardado', 'guardados')));
     if (editando) {
       formulario(seccion);
     } else {
@@ -86,7 +86,7 @@
         App.el('th', { text: 'NIF/CIF' }),
         App.el('th', { text: 'Email' }),
         App.el('th', { text: 'Tipo' }),
-        App.el('th', {})
+        App.el('th', { class: 'ajustada' })
       ])]),
       App.el('tbody', {}, lista.map(function (c) {
         return App.el('tr', {}, [
@@ -94,7 +94,7 @@
           App.el('td', { 'data-label': 'NIF/CIF', text: c.nif || '' }),
           App.el('td', { 'data-label': 'Email', text: c.email || '' }),
           App.el('td', { 'data-label': 'Tipo', text: TIPOS[c.tipo] || '' }),
-          App.el('td', {}, [App.el('div', { class: 'acciones' }, [
+          App.el('td', { class: 'ajustada' }, [App.el('div', { class: 'acciones' }, [
             App.el('button', { type: 'button', class: 'pequeno', text: 'Editar', onclick: function () { editando = c.id; App.ir('clientes'); } }),
             App.el('button', { type: 'button', class: 'pequeno peligro', 'data-guarda': true, text: 'Borrar', onclick: function () { borrar(c); } })
           ])])

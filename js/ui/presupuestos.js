@@ -78,7 +78,7 @@
   }
 
   function mostrar(seccion) {
-    seccion.appendChild(App.el('h2', { text: 'Presupuestos' }));
+    seccion.appendChild(App.titulo('Presupuestos', Formato.recuento(App.estado.presupuestos.length, 'guardado', 'guardados')));
     var estadoExportacion = App.el('p', { class: 'exportacion-estado', role: 'status' });
     var botonExportar = App.el('button', {
       type: 'button', 'data-guarda': true, text: 'Exportar todo (.zip)',
@@ -102,12 +102,12 @@
     var hoy = Formato.hoy();
     var filas = lista.map(function (p) {
       return App.el('tr', {}, [
-        App.el('td', { 'data-label': 'Número', text: p.numero }),
+        App.el('td', { class: 'ajustada', 'data-label': 'Número', text: p.numero }),
         App.el('td', { 'data-label': 'Cliente', text: p.cliente.nombre }),
-        App.el('td', { 'data-label': 'Fecha de emisión', text: Formato.fecha(p.fechaEmision) }),
+        App.el('td', { class: 'ajustada', 'data-label': 'Fecha de emisión', text: Formato.fecha(p.fechaEmision) }),
         App.el('td', { class: 'numero', 'data-label': 'Total', text: Formato.importe(Calculos.totales(p).totalCentimos) }),
-        App.el('td', { 'data-label': 'Estado' }, [etiquetaEstado(p, hoy)]),
-        App.el('td', {}, [App.el('div', { class: 'acciones' }, [
+        App.el('td', { class: 'ajustada', 'data-label': 'Estado' }, [etiquetaEstado(p, hoy)]),
+        App.el('td', { class: 'ajustada' }, [App.el('div', { class: 'acciones' }, [
           App.el('button', { type: 'button', class: 'pequeno', text: 'Abrir', onclick: function () { App.ir('editor', { id: p.id }); } }),
           App.el('button', { type: 'button', class: 'pequeno', text: 'Descargar PDF', onclick: function () { Pantallas.editor.descargarGuardado(p); } }),
           App.el('button', { type: 'button', class: 'pequeno peligro', 'data-guarda': true, text: 'Borrar', onclick: function () { borrar(p); } })
@@ -117,12 +117,12 @@
 
     seccion.appendChild(App.el('table', {}, [
       App.el('thead', {}, [App.el('tr', {}, [
-        App.el('th', { text: 'Número' }),
+        App.el('th', { class: 'ajustada', text: 'Número' }),
         App.el('th', { text: 'Cliente' }),
-        App.el('th', { text: 'Fecha de emisión' }),
+        App.el('th', { class: 'ajustada', text: 'Fecha de emisión' }),
         App.el('th', { class: 'numero', text: 'Total' }),
-        App.el('th', { text: 'Estado' }),
-        App.el('th', {})
+        App.el('th', { class: 'ajustada', text: 'Estado' }),
+        App.el('th', { class: 'ajustada' })
       ])]),
       App.el('tbody', {}, filas)
     ]));

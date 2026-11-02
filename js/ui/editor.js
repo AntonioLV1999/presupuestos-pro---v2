@@ -353,10 +353,12 @@
 
   function pintar() {
     seccion.innerHTML = '';
-    var titulo = borrador.numero ? 'Presupuesto ' + borrador.numero : 'Nuevo presupuesto';
     var sinCatalogo = App.estado.catalogo.length === 0;
 
-    seccion.appendChild(App.el('h2', { text: titulo }));
+    // El número va en la familia de texto, nunca en la serif del título (FR-024).
+    seccion.appendChild(borrador.numero
+      ? App.el('div', { class: 'titulo-pantalla' }, [App.el('h2', {}, ['Presupuesto ', App.el('span', { class: 'dato', text: borrador.numero })])])
+      : App.titulo('Nuevo presupuesto'));
     seccion.appendChild(pintarCabecera());
     seccion.appendChild(App.el('h3', { text: 'Cliente' }));
     seccion.appendChild(pintarCliente());

@@ -41,7 +41,7 @@
     var lineaY = y + 5;
     texto(doc, 'texto');
     if (profesional.nombre && profesional.nombre.trim()) {
-      doc.setFont('helvetica', 'bold');
+      doc.setFont('times', 'bold');
       doc.setFontSize(13);
       doc.text(profesional.nombre.trim(), DERECHA, lineaY, { align: 'right' });
       lineaY += 6;
@@ -76,17 +76,18 @@
     texto(doc, 'texto');
     var y = cabecera(doc, prof);
 
-    // Línea de acento a todo el ancho útil bajo la cabecera.
-    doc.setDrawColor.apply(doc, Tema.rgb('acento'));
+    // Filete de refuerzo a todo el ancho útil bajo la cabecera.
+    doc.setDrawColor.apply(doc, Tema.rgb('borde-fuerte'));
     doc.setLineWidth(0.6);
     doc.line(MARGEN, y - 4, DERECHA, y - 4);
     y += 4;
 
-    // Título, número y fechas.
-    doc.setFont('helvetica', 'bold');
+    // Título en serif; número, fechas y demás datos en la familia de datos (FR-024).
+    doc.setFont('times', 'bold');
     doc.setFontSize(20);
-    texto(doc, 'acento');
+    texto(doc, 'texto');
     doc.text('PRESUPUESTO', MARGEN, y);
+    doc.setFont('helvetica', 'bold');
     doc.setFontSize(12);
     texto(doc, 'suave');
     doc.text('Nº ' + presupuesto.numero, DERECHA, y, { align: 'right' });
@@ -100,10 +101,10 @@
 
     // Cliente.
     var cliente = presupuesto.cliente || {};
-    doc.setFont('helvetica', 'bold');
+    doc.setFont('times', 'normal');
     doc.setFontSize(9);
     texto(doc, 'suave');
-    doc.text('Cliente', MARGEN, y);
+    doc.text('CLIENTE', MARGEN, y);
     y += 5;
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(10);
@@ -139,7 +140,11 @@
         font: 'helvetica', fontSize: 10, cellPadding: 2.5, textColor: Tema.rgb('texto'),
         overflow: 'linebreak', lineColor: Tema.rgb('borde'), lineWidth: { bottom: 0.2 }
       },
-      headStyles: { fillColor: Tema.rgb('acento'), textColor: Tema.rgb('superficie'), fontStyle: 'bold', lineWidth: 0 },
+      // Sin banda de color: encabezado sobre superficie de reposo con filete de refuerzo (FR-016).
+      headStyles: {
+        font: 'times', fontStyle: 'bold', fillColor: Tema.rgb('superficie-alt'), textColor: Tema.rgb('texto'),
+        lineWidth: { bottom: 0.5 }, lineColor: Tema.rgb('borde-fuerte')
+      },
       columnStyles: {
         0: { cellWidth: 'auto' },
         1: { halign: 'right', cellWidth: 22 },
@@ -169,24 +174,27 @@
       doc.text(fila[1], DERECHA, y, { align: 'right' });
       y += 6;
     });
-    doc.setFillColor.apply(doc, Tema.rgb('fondo'));
+    doc.setFillColor.apply(doc, Tema.rgb('superficie-alt'));
     doc.rect(110, y - 3, DERECHA - 110, 10, 'F');
-    doc.setDrawColor.apply(doc, Tema.rgb('texto'));
-    doc.setLineWidth(0.4);
+    doc.setDrawColor.apply(doc, Tema.rgb('borde-fuerte'));
+    doc.setLineWidth(0.6);
     doc.line(110, y - 3, DERECHA, y - 3);
     y += 4;
-    doc.setFont('helvetica', 'bold');
+    doc.setFont('times', 'bold');
     doc.setFontSize(14);
     doc.text('TOTAL', 150, y, { align: 'right' });
+    // El importe nunca en serif (FR-024).
+    doc.setFont('helvetica', 'bold');
     doc.text(Formato.importe(totales.totalCentimos), DERECHA, y, { align: 'right' });
     y += 12;
 
     // Observaciones.
     if (presupuesto.observaciones && presupuesto.observaciones.trim()) {
       y = comprobarSalto(doc, y, 15);
+      doc.setFont('times', 'normal');
       doc.setFontSize(9);
       texto(doc, 'suave');
-      doc.text('Observaciones', MARGEN, y);
+      doc.text('OBSERVACIONES', MARGEN, y);
       y += 6;
       doc.setFont('helvetica', 'normal');
       doc.setFontSize(10);

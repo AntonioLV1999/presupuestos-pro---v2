@@ -75,6 +75,12 @@
     return importe(centimos).replace(' €', '');
   }
 
+  /** Complemento del título de pantalla: «Ninguno todavía», «1 guardado», «3 guardados» (FR-026). */
+  function recuento(n, singular, plural) {
+    if (n === 0) { return 'Ninguno todavía'; }
+    return n + ' ' + (n === 1 ? singular : plural);
+  }
+
   window.Formato = {
     importe: importe,
     cantidad: cantidad,
@@ -82,6 +88,7 @@
     leerImporte: leerImporte,
     leerCantidad: leerCantidad,
     hoy: hoy,
-    importeEditable: importeEditable
+    importeEditable: importeEditable,
+    recuento: recuento
   };
 }());

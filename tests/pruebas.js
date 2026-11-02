@@ -98,6 +98,14 @@
     esIgual(/^\d{4}-\d{2}-\d{2}$/.test(Formato.hoy()), true);
   });
 
+  caso('Recuentos para el título de pantalla', function () {
+    esIgual(Formato.recuento(0, 'guardado', 'guardados'), 'Ninguno todavía');
+    esIgual(Formato.recuento(1, 'guardado', 'guardados'), '1 guardado');
+    esIgual(Formato.recuento(3, 'guardado', 'guardados'), '3 guardados');
+    esIgual(Formato.recuento(1, 'servicio', 'servicios'), '1 servicio');
+    esIgual(Formato.recuento(4, 'servicio', 'servicios'), '4 servicios');
+  });
+
   // --------------------------------------------------------------- Cálculos
   seccion('Cálculos');
 

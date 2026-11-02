@@ -1,19 +1,32 @@
 /* Estilos de Presupuestos Pro. Mobile-first, solo fuentes del sistema.
    Los colores vienen de js/tema.js (variables --texto, --acento…); aquí no hay colores literales. */
 :root {
-  --fuente: system-ui, "Segoe UI", Arial, sans-serif;
+  /* Dos familias con papeles disjuntos (FR-008): títulos y rótulos / texto y todo número (FR-024). */
+  --fuente: "Segoe UI Variable Text", "Segoe UI", system-ui, Arial, sans-serif;
+  --fuente-titulo: Cambria, "Sitka Text", Georgia, "Times New Roman", serif;
 
   --t-xs: 12px;
   --t-s: 14px;
   --t-m: 16px;
   --t-l: 20px;
-  --t-xl: 26px;
+  --t-xl: 30px;
+  --t-2xl: 40px;
+
+  --lh-apretado: 1.2;
+  --lh-normal: 1.5;
+  --letra-rotulo: 0.08em;
+  --peso-medio: 600;
 
   --e-1: 4px;
   --e-2: 8px;
   --e-3: 16px;
   --e-4: 24px;
   --e-5: 32px;
+  --e-6: 48px;
+
+  --radio: 4px;
+  --filete: 1px;
+  --filete-fuerte: 2px;
 
   --alto-tactil: 44px;
 }
@@ -24,22 +37,31 @@ body {
   margin: 0;
   font-family: var(--fuente);
   font-size: var(--t-m);
+  line-height: var(--lh-normal);
   color: var(--texto);
   background: var(--fondo);
   overflow-wrap: anywhere;
+  /* Cifras de ancho constante en toda la app: las columnas numéricas alinean (FR-024). */
+  font-variant-numeric: tabular-nums;
 }
+
+h1, h2, h3 { font-family: var(--fuente-titulo); line-height: var(--lh-apretado); }
+h2 { font-weight: 400; }
+h1, h3 { font-weight: var(--peso-medio); }
 
 /* ---------- Cabecera y navegación común ---------- */
 header {
   position: sticky;
   top: 0;
   z-index: 10;
-  background: var(--acento);
-  color: var(--superficie);
+  /* Papel con filete, no banda de color (FR-023). */
+  background: var(--fondo);
+  color: var(--texto);
+  border-bottom: var(--filete) solid var(--borde-fuerte);
   padding: var(--e-2) var(--e-3) 0;
 }
 
-header h1 { font-size: var(--t-l); margin: 0 0 var(--e-2); }
+header h1 { font-size: var(--t-l); margin: 0 0 var(--e-2); color: var(--texto); }
 
 nav { display: flex; flex-wrap: wrap; }
 
@@ -47,23 +69,31 @@ nav button {
   flex: 1 1 33%;
   min-height: var(--alto-tactil);
   background: transparent;
-  color: var(--superficie);
+  color: var(--suave);
   border: none;
-  border-bottom: var(--e-1) solid transparent;
+  border-bottom: var(--filete-fuerte) solid transparent;
   border-radius: 0;
   padding: var(--e-2) var(--e-1);
   overflow-wrap: normal;
   font-size: var(--t-s);
 }
 
-nav button:hover { background: var(--acento-oscuro); }
+nav button:hover { background: transparent; color: var(--texto); }
+/* Un único signo para la sección actual: filete de acento y peso medio (FR-025). */
 nav button.activo,
-nav button[aria-current="page"] { border-bottom-color: var(--superficie); font-weight: bold; background: var(--acento-oscuro); }
+nav button[aria-current="page"] { border-bottom-color: var(--acento); font-weight: var(--peso-medio); color: var(--texto); background: transparent; }
 
 main { max-width: 1100px; margin: 0 auto; padding: var(--e-3); }
 
 h2 { font-size: var(--t-xl); margin: 0 0 var(--e-3); }
 h3 { font-size: var(--t-l); margin: var(--e-4) 0 var(--e-2); }
+
+/* Título de pantalla con complemento de contexto (FR-026). */
+.titulo-pantalla { margin: 0 0 var(--e-5); }
+.titulo-pantalla h2 { margin: 0; }
+.complemento { margin: var(--e-1) 0 0; font-family: var(--fuente); font-size: var(--t-s); color: var(--suave); }
+/* Números dentro de un título: nunca en la serif (FR-024). */
+.dato { font-family: var(--fuente); }
 
 section[hidden] { display: none; }
 
@@ -72,7 +102,7 @@ section[hidden] { display: none; }
   padding: var(--e-2) var(--e-3);
   border: 1px solid var(--borde);
   border-left-width: var(--e-1);
-  border-radius: var(--e-2);
+  border-radius: var(--radio);
   margin-bottom: var(--e-3);
 }
 
@@ -90,7 +120,7 @@ button, .boton {
   font: inherit;
   min-height: var(--alto-tactil);
   padding: var(--e-2) var(--e-3);
-  border-radius: var(--e-2);
+  border-radius: var(--radio);
   border: 1px solid var(--borde);
   background: var(--superficie);
   color: var(--texto);
@@ -104,7 +134,7 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
   outline: 3px solid var(--acento);
   outline-offset: 2px;
 }
-nav button:focus-visible { outline-color: var(--superficie); outline-offset: -4px; }
+nav button:focus-visible { outline-color: var(--acento); outline-offset: -4px; }
 
 button.primario { background: var(--acento); border-color: var(--acento); color: var(--superficie); }
 button.primario:hover { background: var(--acento-oscuro); }
@@ -112,20 +142,25 @@ button.peligro { color: var(--error); border-color: var(--error); }
 button.pequeno { padding: var(--e-1) var(--e-2); font-size: var(--t-s); }
 
 .acciones { display: flex; gap: var(--e-2); flex-wrap: wrap; margin: var(--e-3) 0; }
+/* La acción destructiva va separada del resto, no solo en otro color (FR-029). */
+.acciones .peligro { margin-left: var(--e-4); }
 
 /* ---------- Formularios ---------- */
 .formulario {
   display: grid;
-  grid-template-columns: 1fr;
+  /* minmax(0, …): la columna no crece con el contenido que no se parte (p. ej. el selector de archivo) (FR-014). */
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--e-3);
   margin-bottom: var(--e-3);
 }
 
+/* Separado por filete, no por caja (FR-023). */
 .formulario.recuadro {
-  border: 1px solid var(--borde);
-  border-radius: var(--e-2);
-  padding: var(--e-3);
-  background: var(--superficie);
+  border: none;
+  border-top: var(--filete) solid var(--borde);
+  border-radius: 0;
+  padding: var(--e-4) 0 0;
+  background: transparent;
 }
 
 label { display: block; font-size: var(--t-s); color: var(--suave); margin-bottom: var(--e-1); }
@@ -137,12 +172,15 @@ input[type="text"], input[type="email"], select, textarea {
   min-height: var(--alto-tactil);
   padding: var(--e-2);
   border: 1px solid var(--borde);
-  border-radius: var(--e-2);
+  border-radius: var(--radio);
   background: var(--superficie);
   color: var(--texto);
 }
 
 textarea { min-height: 96px; resize: vertical; }
+
+/* El selector de archivo nativo del logo tiene ancho propio: sin este límite desborda a 320 px (FR-014, SC-008). */
+input[type="file"] { max-width: 100%; }
 
 input.invalido, select.invalido, textarea.invalido { border: 2px solid var(--error); background: var(--error-fondo); }
 
@@ -161,13 +199,15 @@ table:not(.totales) thead {
   clip-path: inset(50%);
 }
 
+/* En móvil cada fila es un bloque separado por filete, no una tarjeta (FR-023). */
 table:not(.totales) tr {
   display: block;
-  background: var(--superficie);
-  border: 1px solid var(--borde);
-  border-radius: var(--e-2);
-  padding: var(--e-2) var(--e-3);
-  margin-bottom: var(--e-2);
+  background: transparent;
+  border: none;
+  border-top: var(--filete) solid var(--borde);
+  border-radius: 0;
+  padding: var(--e-3) 0;
+  margin-bottom: 0;
 }
 
 table:not(.totales) td {
@@ -190,39 +230,51 @@ td[data-label]::before {
 td .acciones { margin: var(--e-1) 0; }
 
 /* ---------- Etiquetas de estado (FR-013) ---------- */
+/* Rótulo, no botón: más bajo, sin radio y sin borde de control (FR-027).
+   En gris, Vigente es un bloque relleno y Caducado un contorno discontinuo (FR-013). */
 .estado {
   display: inline-block;
-  padding: var(--e-1) var(--e-2);
-  border-radius: var(--e-2);
-  border: 2px solid;
-  font-size: var(--t-s);
-  font-weight: bold;
+  padding: 0 var(--e-2);
+  line-height: 1.8;
+  border: var(--filete) solid transparent;
+  border-radius: 0;
+  font-size: var(--t-xs);
+  font-weight: var(--peso-medio);
+  letter-spacing: var(--letra-rotulo);
+  text-transform: uppercase;
 }
 
-.estado.vigente { color: var(--exito); background: var(--exito-fondo); border-style: solid; }
-.estado.caducado { color: var(--aviso); background: var(--aviso-fondo); border-style: dashed; }
+.estado.vigente { color: var(--exito); background: var(--exito-fondo); }
+.estado.caducado { color: var(--aviso); background: transparent; border-color: var(--aviso); border-style: dashed; }
 
 /* ---------- Inicio ---------- */
+/* El resumen y su botón principal son un solo bloque (FR-006a). */
+.bloque-resumen { margin-bottom: var(--e-6); }
+.bloque-resumen .acciones { margin: var(--e-4) 0 0; }
+
 .resumen {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: var(--e-2);
+  gap: var(--e-4);
   margin-bottom: var(--e-3);
 }
 
+/* Cifras separadas por filete, no en cajas (FR-023). */
 .cifra {
   display: flex;
   flex-direction: column;
-  background: var(--superficie);
-  border: 1px solid var(--borde);
-  border-radius: var(--e-2);
-  padding: var(--e-3);
+  background: transparent;
+  border: none;
+  border-top: var(--filete) solid var(--borde);
+  border-radius: 0;
+  padding: var(--e-3) 0 0;
 }
 
-.cifra-valor { font-size: var(--t-xl); font-weight: bold; color: var(--acento); }
+/* En tinta: el acento no se usa en las cifras del resumen (FR-030). */
+.cifra-valor { font-size: var(--t-xl); font-weight: var(--peso-medio); color: var(--texto); }
 .cifra-etiqueta { font-size: var(--t-s); color: var(--suave); }
 
-.accesos { display: grid; grid-template-columns: 1fr; gap: var(--e-2); }
+.accesos { display: grid; grid-template-columns: 1fr; gap: var(--e-4); }
 
 button.acceso {
   display: flex;
@@ -230,10 +282,15 @@ button.acceso {
   align-items: flex-start;
   gap: var(--e-1);
   text-align: left;
-  padding: var(--e-3);
+  background: transparent;
+  border: none;
+  border-top: var(--filete) solid var(--borde);
+  border-radius: 0;
+  padding: var(--e-3) var(--e-2);
 }
 
-button.acceso strong { font-size: var(--t-l); color: var(--acento); }
+button.acceso:hover { background: var(--papel-hundido); }
+button.acceso strong { font-family: var(--fuente-titulo); font-size: var(--t-l); color: var(--texto); }
 button.acceso span { color: var(--suave); font-size: var(--t-s); }
 
 /* ---------- Editor de presupuesto ---------- */
@@ -247,24 +304,30 @@ button.acceso span { color: var(--suave); font-size: var(--t-s); }
 .lineas input[type="text"] { text-align: right; }
 .lineas td.concepto input[type="text"] { text-align: left; }
 
-.totales { width: 100%; background: var(--superficie); border: 1px solid var(--borde); border-radius: var(--e-2); }
+.totales { width: 100%; background: transparent; border: none; border-radius: 0; }
 .totales td { border: none; padding: var(--e-1) var(--e-3); }
 .totales td.numero { text-align: right; white-space: nowrap; }
+/* El total: escalón propio y filete de refuerzo (FR-011). En tinta, no en acento: el rojo se lee como saldo negativo. */
 .totales tr.total td {
-  font-size: var(--t-xl);
-  font-weight: bold;
-  background: var(--fondo);
-  border-top: 2px solid var(--texto);
-  padding-top: var(--e-2);
-  padding-bottom: var(--e-2);
+  font-size: var(--t-2xl);
+  font-weight: var(--peso-medio);
+  color: var(--texto);
+  background: var(--superficie-alt);
+  border-top: var(--filete-fuerte) solid var(--borde-fuerte);
+  padding-top: var(--e-3);
+  padding-bottom: var(--e-3);
 }
+/* Un total muy largo se parte antes que provocar desplazamiento horizontal en 320 px (FR-014). */
+.totales tr.total td.numero { white-space: normal; overflow-wrap: anywhere; }
 
 .logo-previo { max-height: 100px; max-width: 100%; display: block; margin: var(--e-2) 0; border: 1px solid var(--borde); }
 
 .lista-catalogo {
-  border: 1px solid var(--borde);
-  border-radius: var(--e-2);
-  background: var(--superficie);
+  border: none;
+  border-top: var(--filete) solid var(--borde);
+  border-bottom: var(--filete) solid var(--borde);
+  border-radius: 0;
+  background: transparent;
   padding: var(--e-2);
   margin: var(--e-2) 0;
   max-height: 260px;
@@ -281,28 +344,42 @@ button.acceso span { color: var(--suave); font-size: var(--t-s); }
 
   main { padding: var(--e-4); }
 
-  .formulario { grid-template-columns: repeat(2, 1fr); }
+  .formulario { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
   table:not(.totales) thead { position: static; width: auto; height: auto; overflow: visible; clip-path: none; }
   table:not(.totales) tr { display: table-row; background: none; border: none; border-radius: 0; padding: 0; margin: 0; }
-  table:not(.totales) td { display: table-cell; text-align: left; padding: var(--e-2); border-bottom: 1px solid var(--borde); vertical-align: top; }
+  /* Fila alineada al centro y de 52 px: 44 de botón + 4 + 4 (FR-028, research R8). */
+  table:not(.totales) td { display: table-cell; text-align: left; padding: var(--e-1) var(--e-2); border-bottom: 1px solid var(--borde); vertical-align: middle; }
   td[data-label]::before { display: none; }
   .lineas td { vertical-align: middle; }
   .lineas td.concepto { display: table-cell; width: 40%; }
-  th { text-align: left; padding: var(--e-2); background: var(--fondo); font-weight: 600; border-bottom: 1px solid var(--borde); }
+  th { text-align: left; padding: var(--e-2); background: var(--superficie-alt); font-weight: var(--peso-medio); border-bottom: var(--filete-fuerte) solid var(--borde-fuerte); }
   td.numero, th.numero { text-align: right; white-space: nowrap; }
-  table:not(.totales) td.numero { text-align: right; }
+  /* Al menos 24 px entre el total y la etiqueta de estado. */
+  table:not(.totales) td.numero, table:not(.totales) th.numero { text-align: right; padding-right: var(--e-4); }
+  /* Las acciones pueden pasar a una segunda línea hasta 960 px: así no hay desplazamiento horizontal (FR-014). */
+  td .acciones { margin: 0; }
 
-  .totales { width: 340px; margin-left: auto; }
+  .totales { width: 420px; margin-left: auto; }
+  .totales tr.total td.numero { white-space: nowrap; }
 
   .resumen { grid-template-columns: repeat(3, 1fr); }
   .accesos { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* Resalte de fila solo donde hay puntero de verdad: sin efecto pegajoso en táctil (FR-028, research R9). */
+@media (min-width: 640px) and (hover: hover) {
+  table:not(.totales):not(.lineas) tbody tr:hover { background: var(--papel-hundido); }
 }
 
 /* ---------- Desde 960 px ---------- */
 @media (min-width: 960px) {
   .resumen { grid-template-columns: repeat(5, 1fr); }
   .accesos { grid-template-columns: repeat(4, 1fr); }
+
+  /* Columnas ajustadas al contenido y acciones en una línea: solo aquí cabe sin desbordar (research R8). */
+  td.numero, th.numero, td.ajustada, th.ajustada { width: 1%; white-space: nowrap; }
+  td .acciones { flex-wrap: nowrap; }
 }
 
 td input[type="text"] { flex: 1; min-width: 0; }

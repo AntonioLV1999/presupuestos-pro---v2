@@ -58,7 +58,7 @@
   }
 
   function mostrar(seccion) {
-    seccion.appendChild(App.el('h2', { text: 'Catálogo' }));
+    seccion.appendChild(App.titulo('Catálogo', Formato.recuento(App.estado.catalogo.length, 'servicio', 'servicios')));
     if (editando) {
       formulario(seccion);
     } else {
@@ -77,13 +77,13 @@
       App.el('thead', {}, [App.el('tr', {}, [
         App.el('th', { text: 'Servicio' }),
         App.el('th', { class: 'numero', text: 'Precio habitual' }),
-        App.el('th', {})
+        App.el('th', { class: 'ajustada' })
       ])]),
       App.el('tbody', {}, lista.map(function (s) {
         return App.el('tr', {}, [
           App.el('td', { 'data-label': 'Servicio', text: s.nombre }),
           App.el('td', { class: 'numero', 'data-label': 'Precio habitual', text: Formato.importe(s.precioCentimos) }),
-          App.el('td', {}, [App.el('div', { class: 'acciones' }, [
+          App.el('td', { class: 'ajustada' }, [App.el('div', { class: 'acciones' }, [
             App.el('button', { type: 'button', class: 'pequeno', text: 'Editar', onclick: function () { editando = s.id; App.ir('catalogo'); } }),
             App.el('button', { type: 'button', class: 'pequeno peligro', 'data-guarda': true, text: 'Borrar', onclick: function () { borrar(s); } })
           ])])

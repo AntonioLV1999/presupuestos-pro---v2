@@ -14,6 +14,12 @@ App web local para que freelancers hagan presupuestos con IVA (21 %) y retenció
 - [003] Operaciones masivas largas (`async`): ceder el control con `requestAnimationFrame` + `setTimeout` entre pasos para pintar el progreso, y bloquear reentradas con una variable de módulo.
 - [003] Nombres de archivo derivados de datos de la usuaria pasan por `Exportacion.nombreSeguro` (caracteres de Windows → «-») y se hacen únicos sin distinguir mayúsculas.
 - [003] Las exportaciones solo leen `App.estado`; nunca llaman a `App.cambiar` ni `Almacen.guardar`.
+- [002] Dos familias con papeles disjuntos: `--fuente-titulo` (serif del sistema) solo para títulos y rótulos; `--fuente` para el texto, los controles y **todo número**. Ningún número en la serif, tampoco en el PDF; `body` lleva `font-variant-numeric: tabular-nums`.
+- [002] El color `acento` se reserva para la sección actual, el botón principal y el foco; el color `error` nunca rellena un botón (solo texto, borde o fondo suave).
+- [002] El PDF usa solo las familias núcleo de jsPDF (`times` para titulares y rótulos, `helvetica` para datos e importes), sin incrustar ninguna fuente. Tras `setFont('times')`, volver a `helvetica` antes de escribir cualquier número.
+- [002] Títulos de pantalla con `App.titulo(texto, complemento)`, para que el `h2` no repita el menú; los recuentos se escriben con `Formato.recuento(n, singular, plural)`.
+- [002] Rejillas con `minmax(0, 1fr)`; en las tablas, `width: 1%`/`nowrap` y las acciones en una sola línea solo desde 960 px. Por debajo de ese ancho, el contenido que no se parte desborda.
+- [002] La validación visual se hace con datos ficticios en un perfil de navegador aislado (ventana InPrivate o `--user-data-dir` temporal), nunca con los datos reales: no hay forma de restaurarlos.
 
 ## Arranque y pruebas
 - Arrancar: doble clic en `index.html` (no hay servidor ni instalación).

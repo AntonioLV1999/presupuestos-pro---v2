@@ -42,22 +42,25 @@ Para las cifras se usa `font-variant-numeric: tabular-nums`, que Segoe UI y Sego
 
 **Rationale**: el proyecto ya tiene el mecanismo correcto —un único objeto en `js/tema.js` que se vuelca como variables CSS y alimenta el PDF por `Tema.rgb`—, así que R2 no necesita inventar nada: basta cambiar valores y añadir tres papeles que antes no existían (filete de refuerzo, superficie de reposo y resalte de fila). No se renombra ningún token, en coherencia con la norma del proyecto de no renombrar identificadores internos aunque cambie el texto visible.
 
-Contrastes calculados sobre los valores elegidos (pendientes de confirmar con herramienta en la fase F):
+Contrastes **medidos** (T037, 2026-11-02) con la fórmula de luminancia relativa de WCAG 2.x, leyendo los valores directamente de `js/tema.js`:
 
-| Par | Ratio | AA (4,5:1) |
-|---|---|---|
-| `texto` sobre `fondo` | ≈ 16,5:1 | ✔ |
-| `texto` sobre `superficie` | ≈ 17,4:1 | ✔ |
-| `texto` sobre `superficie-alt` | ≈ 15,4:1 | ✔ |
-| `texto` sobre `papel-hundido` | ≈ 14,2:1 | ✔ |
-| `suave` sobre `papel-hundido` | ≈ 4,8:1 | ✔ |
-| `papel-hundido` frente a `fondo` *(superficie, umbral 1,15:1)* | ≈ 1,16:1 | ✔ |
-| `suave` sobre `superficie` | ≈ 5,9:1 | ✔ |
-| `suave` sobre `fondo` | ≈ 5,6:1 | ✔ |
-| `superficie` sobre `acento` | ≈ 8,1:1 | ✔ |
-| `exito` sobre `exito-fondo` | ≈ 5,2:1 | ✔ |
-| `aviso` sobre `aviso-fondo` | ≈ 5,9:1 | ✔ |
-| `error` sobre `error-fondo` | ≈ 5,7:1 | ✔ |
+| Par | Ratio medido | Mínimo | Cumple |
+|---|---|---|---|
+| `texto` sobre `fondo` | 16,51:1 | 4,5:1 | ✔ |
+| `texto` sobre `superficie` | 17,36:1 | 4,5:1 | ✔ |
+| `texto` sobre `superficie-alt` | 15,39:1 | 4,5:1 | ✔ |
+| `texto` sobre `papel-hundido` | 14,20:1 | 4,5:1 | ✔ |
+| `suave` sobre `superficie` | 5,85:1 | 4,5:1 | ✔ |
+| `suave` sobre `fondo` | 5,56:1 | 4,5:1 | ✔ |
+| `suave` sobre `papel-hundido` | 4,78:1 | 4,5:1 | ✔ |
+| `superficie` sobre `acento` | 8,14:1 | 4,5:1 | ✔ |
+| `exito` sobre `exito-fondo` | 5,23:1 | 4,5:1 | ✔ |
+| `aviso` sobre `aviso-fondo` | 5,86:1 | 4,5:1 | ✔ |
+| `aviso` sobre `fondo` *(Caducado no lleva fondo propio)* | 6,37:1 | 4,5:1 | ✔ |
+| `error` sobre `error-fondo` | 5,73:1 | 4,5:1 | ✔ |
+| `error` sobre `superficie` *(botón Borrar)* | 6,54:1 | 4,5:1 | ✔ |
+| `acento` sobre `fondo` *(contorno de foco)* | 7,74:1 | 3:1 | ✔ |
+| `papel-hundido` frente a `fondo` *(resalte de fila, superficie)* | 1,16:1 | 1,15:1 | ✔ |
 
 **Corrección tras `/speckit-analyze`**: `papel-hundido` pasa de `#F2EFE7` a `#EDE8DC`. El valor inicial solo daba ~1,09:1 frente a `fondo`, y el resalte de fila (FR-028, historia 6, escenario 3) corría el riesgo de no percibirse en pantallas de portátil corrientes. El nuevo valor llega a ~1,16:1 y mantiene el contraste AA de todo texto que se pinta encima.
 

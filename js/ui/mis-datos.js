@@ -74,7 +74,7 @@
       }
     }
 
-    seccion.appendChild(App.el('h2', { text: 'Perfil' }));
+    seccion.appendChild(App.titulo('Perfil', 'Tus datos para los presupuestos'));
     seccion.appendChild(App.el('p', { class: 'vacio', text: 'Estos datos aparecen en todos tus presupuestos en PDF.' }));
     seccion.appendChild(caja);
     seccion.appendChild(App.el('div', { class: 'acciones' }, [
